@@ -5,3 +5,4 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('theme') }}"><i class="nav-icon la la-question"></i> Themes</a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('question') }}"><i class="nav-icon la la-question"></i> Questions</a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('concept') }}"><i class="nav-icon la la-question"></i> Concepts</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('showImportData') }}"><i class="nav-icon la la-question"></i> Import de données</a></li>

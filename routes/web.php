@@ -28,4 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post("simple-excel/import", [\App\Http\Controllers\ImportController::class,'import'])->name('excel.import');
+
 require __DIR__.'/auth.php';

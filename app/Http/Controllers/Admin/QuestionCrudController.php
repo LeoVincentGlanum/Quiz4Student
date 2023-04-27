@@ -6,6 +6,7 @@ use App\Http\Requests\QuestionRequest;
 use App\Models\Concept;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * Class QuestionCrudController
@@ -63,9 +64,22 @@ class QuestionCrudController extends CrudController
     {
         CRUD::setValidation(QuestionRequest::class);
 
-        CRUD::field('concept')->type('select')->entity('concept')->model(Concept::class);
+        CRUD::field('concept_id')->type('select')->entity('concept')->attribute('label')->model(Concept::class);
         CRUD::field('label');
         CRUD::field('feedback');
+        CRUD::field('reponses')->type('repeatable')->subfields([
+            [
+                'name'    => 'name',
+                'type'    => 'text',
+                'label'   => 'Name',
+            ],
+            [
+                'name'    => 'is_good',
+                'type'    => 'checkbox',
+                'label'   => 'Reponse correct',
+            ],
+        ]);
+
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -84,4 +98,6 @@ class QuestionCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+
 }
