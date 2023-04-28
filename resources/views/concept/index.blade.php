@@ -16,31 +16,41 @@
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold">Cours 1</div>
+                    <div class="fw-bold">
+                        <label class="form-check-label text-light" for="flexCheckDefault">
+                            Cours 1
+                        </label>
+                    </div>
                 </div>
                 <span class="badge bg-primary">Comp</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
 
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold">Cours 2</div>
+                    <div class="fw-bold"><label class="form-check-label text-light" for="flexCheckDefault2">
+                            Cours 2
+                        </label></div>
                 </div>
                 <span class="badge bg-danger">Init</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
 
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold">Cours 3</div>
+                    <div class="fw-bold"><label class="form-check-label text-light" for="flexCheckDefault3">
+                            Cours 3
+                        </label></div>
                 </div>
                 <span class="badge bg-success">Mtrs</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
 
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold">Cours 4</div>
+                    <div class="fw-bold"><label class="form-check-label text-light" for="flexCheckDefault4">
+                            Cours 4
+                        </label></div>
                 </div>
                 <span class="badge bg-info">Oubl</span>
             </li>
