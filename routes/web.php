@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //CONCEPT
+    Route::get('/concept', [\App\Http\Controllers\ConceptController::class, 'index'])->name('concept.index');
 });
 
 Route::post("simple-excel/import", [\App\Http\Controllers\ImportController::class,'import'])->name('excel.import');
