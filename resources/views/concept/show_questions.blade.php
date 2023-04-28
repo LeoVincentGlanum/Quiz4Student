@@ -10,7 +10,7 @@
 
 
         @foreach($questions as $question)
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Question </h5>
                     <p class="card-text">{{$question->label}}</p>
@@ -20,7 +20,12 @@
                     @php $array = Illuminate\Support\Arr::shuffle($question->reponses) @endphp
 
                     @foreach($array as $reponse)
-                        <li class="list-group-item">{{$reponse->name}}</li>
+                        @if($loop->last)
+                            <li class="list-group-item" >{{$reponse->name}}</li>
+
+                        @else
+                            <li class="list-group-item" style="border-bottom: 1px solid #8c8c8c6e;">{{$reponse->name}}</li>
+                        @endif
                     @endforeach
                 </ul>
             </div>

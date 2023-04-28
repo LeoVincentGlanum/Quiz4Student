@@ -24,7 +24,7 @@
 
             <!-- Page Heading -->
             <div class="row justify-content-center p-1" role="group" aria-label="Basic example" style="max-width: 100vw; margin: auto">
-                <a href="{{route('concept.index')}}" class="btn btn-outline-primary col-4 qs-little-m-1 {{ request()->route()->getName()=="concept.index" ? 'active' : '' }}">Concept</a>
+                <a href="{{route('concept.index')}}" class="btn btn-outline-primary col-4 qs-little-m-1 {{ in_array(request()->route()->getName(),["concept.index","show.concept.questions"]) ? 'active' : '' }}">Concept</a>
                 <a href="{{route('dashboard')}}" class="btn btn-outline-primary col-3 qs-little-m-1 {{ request()->route()->getName()=="dashboard" ? 'active' : '' }}"><i
                         class="fa-solid fa-house text-light"></i></a>
                 <a href="{{route('concept.index')}}" type="button" class="btn btn-outline-info col-4 qs-little-m-1 {{ request()->route()->getName()=="concept.index" ? 'active' : '' }}">Cours</a>
