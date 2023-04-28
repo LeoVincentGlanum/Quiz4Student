@@ -26,9 +26,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/concept/{id}/questions/',[\App\Http\Controllers\QuestionController::class,'show'])->name('show.concept.questions');
+
+
     //CONCEPT
     Route::get('/concept', [\App\Http\Controllers\ConceptController::class, 'index'])->name('concept.index');
+    Route::get('/concept/{id}/questions/',[\App\Http\Controllers\QuestionController::class,'show'])->name('show.concept.questions');
+
+
+    //COURS
+    Route::get('/cours', [\App\Http\Controllers\CoursController::class, 'index'])->name('cours.index');
 });
 
 
