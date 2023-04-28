@@ -2,18 +2,38 @@
 @extends(backpack_view('blank'))
 
 @section('content')
-    <h3>Importer</h3>
 
-    <p>Sélectionnez un fichier Excel (.xlsx) pour importer les données dans la table "clients".<br><strong>Les colonnes : </strong>name, email, phone, address</p>
+    <div class="container">
+        <h3>Importer les concepts</h3>
 
-    <form method="POST" action="{{ route('excel.import') }}" enctype="multipart/form-data" >
+        <p>Sélectionnez un fichier Excel (.xlsx) pour importer les données
 
-        <!-- CSRF Token -->
-        @csrf
+        <form method="POST" action="{{ route('excel.import') }}" enctype="multipart/form-data" >
 
-        <input type="file" name="fichier" >
+            <!-- CSRF Token -->
+            @csrf
 
-        <button type="submit" >Importer</button>
+            <input type="file" name="fichier" >
 
-    </form>
+            <button type="submit" >Importer</button>
+
+        </form>
+
+
+        <h3 class="mt-5">Importer les cours</h3>
+
+        <p>Sélectionnez un fichier Excel (.xlsx) pour importer les données
+
+        <form method="POST" action="{{ route('excel.importCours') }}" enctype="multipart/form-data" >
+
+            <!-- CSRF Token -->
+            @csrf
+
+            <input type="file" name="fichier" >
+
+            <button type="submit" >Importer les cours</button>
+
+        </form>
+    </div>
+
 @endsection

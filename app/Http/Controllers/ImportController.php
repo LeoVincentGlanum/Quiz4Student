@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Concept;
 use App\Models\ConceptsThemes;
+use App\Models\Cours;
+use App\Models\CoursThemes;
 use App\Models\Question;
 use App\Models\Theme;
 use Illuminate\Http\Request;
@@ -19,7 +21,11 @@ class ImportController extends Controller
         return view("importData");
     }
 
-    public function import (Request $request) {
+
+
+
+
+    public function import(Request $request) {
 
         // 1. Validation du fichier uploadé. Extension ".xlsx" autorisée
         $this->validate($request, [
@@ -155,5 +161,81 @@ class ImportController extends Controller
 
         } else { abort(500); }
     }
+
+
+
+    public function importCours(Request $request) {
+
+        // 1. Validation du fichier uploadé. Extension ".xlsx" autorisée
+        $this->validate($request, [
+            'fichier' => 'bail|required|file|mimes:xlsx'
+        ]);
+
+        // 2. On déplace le fichier uploadé vers le dossier "public" pour le lire
+        $fichier = $request->fichier->move(public_path(), $request->fichier->hashName());
+
+        // 3. $reader : L'instance Spatie\SimpleExcel\SimpleExcelReader
+        $reader = SimpleExcelReader::create($fichier);
+
+        // On récupère le contenu (les lignes) du fichier
+        $rows = $reader->getRows();
+
+        $arrayLignes = $rows->toArray();
+
+        foreach ($arrayLignes as $ligne){
+            $themeLabel = Arr::get($ligne,'Theme');
+            $coursLabel = Arr::get($ligne,'Cours');
+
+            $searchTheme = Theme::query()->where('label','=',$themeLabel)->first();
+
+            if ($searchTheme === null){
+                $searchTheme = new Theme();
+                $searchTheme->label = $themeLabel;
+                $searchTheme->save();
+            }
+
+            $searchCours = Cours::query()->where('label','=',$coursLabel)->first();
+
+            if ($searchCours === null){
+                $searchCours = new Cours();
+                $searchCours->label = $coursLabel;
+                $searchCours->save();
+            }
+
+            $checkRelationExist = CoursThemes::query()->where('theme_id','=',$searchTheme->id)->where('cours_id','=',$searchCours->id)->first();
+
+            if ($checkRelationExist === null){
+                $checkRelationExist = new CoursThemes();
+                $checkRelationExist->cours_id = $searchCours->id;
+                $checkRelationExist->theme_id = $searchTheme->id;
+                $checkRelationExist->save();
+            }
+
+
+
+        }
+
+
+
+        dd($arrayLignes);
+
+        // $rows est une Illuminate\Support\LazyCollection
+
+        // 4. On insère toutes les lignes dans la base de données
+
+
+        // Si toutes les lignes sont insérées
+        if ($status) {
+
+            // 5. On supprime le fichier uploadé
+            $reader->close(); // On ferme le $reader
+            unlink($fichier);
+
+            // 6. Retour vers le formulaire avec un message $msg
+            return back()->withMsg("Importation réussie !");
+
+        } else { abort(500); }
+    }
+
 
 }
