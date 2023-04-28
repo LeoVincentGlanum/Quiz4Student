@@ -31,10 +31,11 @@ Route::middleware('auth')->group(function () {
     //CONCEPT
     Route::get('/concept', [\App\Http\Controllers\ConceptController::class, 'index'])->name('concept.index');
     Route::get('/concept/{id}/questions/',[\App\Http\Controllers\QuestionController::class,'show'])->name('show.concept.questions');
-
-
     //COURS
     Route::get('/cours', [\App\Http\Controllers\CoursController::class, 'index'])->name('cours.index');
+    //Reponses
+    Route::get('/reponses/{id}/{question}',[\App\Http\Controllers\QuestionController::class,'reponse'])->name('new.response');
+
 });
 
 

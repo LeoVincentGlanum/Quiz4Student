@@ -21,10 +21,15 @@
 
                     @foreach($array as $reponse)
                         @if($loop->last)
-                            <li class="list-group-item" >{{$reponse->name}}</li>
+                            <a href="{{route('new.response',['id' => $reponse->uuid, 'question' => $question->id])}}">
+                                <li class="list-group-item" >{{$reponse->name}}</li>
+                            </a>
 
                         @else
-                            <li class="list-group-item" style="border-bottom: 1px solid #8c8c8c6e;">{{$reponse->name}}</li>
+                            <a href="{{route('new.response',['id' => $reponse->uuid, 'question' => $question->id])}}">
+                                <li class="list-group-item" style="border-bottom: 1px solid #8c8c8c6e;">{{$reponse->name}}</li>
+                            </a>
+
                         @endif
                     @endforeach
                 </ul>

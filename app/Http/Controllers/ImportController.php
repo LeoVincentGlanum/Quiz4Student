@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
@@ -59,23 +60,28 @@ class ImportController extends Controller
                 [
                     [
                         "name" => $ReponseGood,
-                        "is_good" => 1
+                        "is_good" => 1,
+                        "uuid" => Str::uuid()
                     ],
                     [
                         "name" => $Reponse2,
-                        "is_good" => 0
+                        "is_good" => 0,
+                        "uuid" => Str::uuid()
                     ],
                     [
                         "name" => $Reponse3,
-                        "is_good" => 0
+                        "is_good" => 0,
+                        "uuid" => Str::uuid()
                     ],
                     [
                         "name" => $Reponse4,
-                        "is_good" => 0
+                        "is_good" => 0,
+                        "uuid" => Str::uuid()
                     ],
                     [
                         "name" => $Reponse5,
-                        "is_good" => 0
+                        "is_good" => 0,
+                        "uuid" => Str::uuid()
                     ]
                 ];
 
