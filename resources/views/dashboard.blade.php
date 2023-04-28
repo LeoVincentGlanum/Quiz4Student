@@ -6,11 +6,8 @@
     </x-slot>
 
     <div class="container">
-        <div class="row justify-content-center pt-1" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary col-4 m-1">Concept</button>
-            <button type="button" class="btn btn-primary col-3 m-1 active"><i class="fa-solid fa-house"></i></button>
-            <button type="button" class="btn btn-primary col-4 m-1">Cours</button>
-        </div>
+
+
         {{--Concept--}}
         <h1 class="display-6 mt-1">Listes de vos concept</h1>
         <ol class="list-group list-group-numbered mt-1 mb-3">
@@ -31,39 +28,45 @@
 
 {{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
 {{--                <div class="ms-2 me-auto">--}}
+{{--                    <div class="fw-bold">Concept 1</div>--}}
+{{--                </div>--}}
+{{--                <span class="badge bg-primary">Comp</span>--}}
+{{--            </li>--}}
+{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
+{{--                <div class="ms-2 me-auto">--}}
 {{--                    <div class="fw-bold">Concept 2</div>--}}
 {{--                </div>--}}
-{{--                <span class="badge qs-badge-initiation">Initiation</span>--}}
+{{--                <span class="badge bg-danger">Init</span>--}}
 {{--            </li>--}}
 {{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
 {{--                <div class="ms-2 me-auto">--}}
 {{--                    <div class="fw-bold">Concept 3</div>--}}
 {{--                </div>--}}
-{{--                <span class="badge qs-badge-maitrise">Maîtrise</span>--}}
+{{--                <span class="badge bg-success">Mtrs</span>--}}
 {{--            </li>--}}
 {{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
 {{--                <div class="ms-2 me-auto">--}}
 {{--                    <div class="fw-bold">Concept 4</div>--}}
 {{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
+{{--                <span class="badge bg-info">Oubl</span>--}}
 {{--            </li>--}}
 {{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
 {{--                <div class="ms-2 me-auto">--}}
 {{--                    <div class="fw-bold">Concept 4</div>--}}
 {{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
+{{--                <span class="badge bg-info">Oubl</span>--}}
 {{--            </li>--}}
 {{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
 {{--                <div class="ms-2 me-auto">--}}
 {{--                    <div class="fw-bold">Concept 4</div>--}}
 {{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
+{{--                <span class="badge bg-info">Oubl</span>--}}
 {{--            </li>--}}
 {{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
 {{--                <div class="ms-2 me-auto">--}}
 {{--                    <div class="fw-bold">Concept 4</div>--}}
 {{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
+{{--                <span class="badge bg-info">Oubl</span>--}}
 {{--            </li>--}}
         </ol>
 
@@ -78,53 +81,53 @@
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">{{$item->label}}</div>
                 </div>
-                <span class="badge qs-badge-comprehension">Compréhension</span>
+                <span class="badge bg-primary">Comp</span>
             </li>
             @endforeach
-{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
-{{--                <div class="ms-2 me-auto">--}}
-{{--                    <div class="fw-bold">Cours 2</div>--}}
-{{--                </div>--}}
-{{--                <span class="badge qs-badge-initiation">Initiation</span>--}}
-{{--            </li>--}}
-{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
-{{--                <div class="ms-2 me-auto">--}}
-{{--                    <div class="fw-bold">Cours 3</div>--}}
-{{--                </div>--}}
-{{--                <span class="badge qs-badge-maitrise">Maîtrise</span>--}}
-{{--            </li>--}}
-{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
-{{--                <div class="ms-2 me-auto">--}}
-{{--                    <div class="fw-bold">Cours 4</div>--}}
-{{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
-{{--            </li>--}}
-{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
-{{--                <div class="ms-2 me-auto">--}}
-{{--                    <div class="fw-bold">Cours 4</div>--}}
-{{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
-{{--            </li>--}}
-{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
-{{--                <div class="ms-2 me-auto">--}}
-{{--                    <div class="fw-bold">Cours 4</div>--}}
-{{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
-{{--            </li>--}}
-{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">--}}
-{{--                <div class="ms-2 me-auto">--}}
-{{--                    <div class="fw-bold">Cours 4</div>--}}
-{{--                </div>--}}
-{{--                <span class="badge qs-badge-oubli">Oubli</span>--}}
-{{--            </li>--}}
+{{--            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cours 2</div>
+                </div>
+                <span class="badge bg-danger">Init</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cours 3</div>
+                </div>
+                <span class="badge bg-success">Mtrs</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cours 4</div>
+                </div>
+                <span class="badge bg-info">Oubl</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cours 4</div>
+                </div>
+                <span class="badge bg-info">Oubl</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cours 4</div>
+                </div>
+                <span class="badge bg-info">Oubl</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cours 4</div>
+                </div>
+                <span class="badge bg-info">Oubl</span>
+            </li>--}}
         </ol>
 
         {{--BTN--}}
 
         <div class="d-flex justify-content-between mt-3">
             <div></div>
-{{--            <button type="button" class="btn qs-btn-reviser">Tout réviser</button>--}}
-            <button type="button" class="btn qs-btn-reviser">Réviser</button>
+            {{--            <button type="button" class="btn qs-btn-reviser">Tout réviser</button>--}}
+            <button type="button" class="btn btn-info">Réviser</button>
         </div>
     </div>
 

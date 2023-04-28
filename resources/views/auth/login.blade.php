@@ -39,7 +39,7 @@
 {{--                </a>--}}
 {{--            @endif--}}
 
-            <x-primary-button class="ml-3 qs-btn-login">
+            <x-primary-button class="ml-3 btn btn-primary qs-color-btn">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
