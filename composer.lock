@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ccf0dd1a112162dcba2bd700388e64e",
+    "content-hash": "53e7bc989f41b0feadeca62f8de16916",
     "packages": [
         {
             "name": "backpack/crud",
@@ -95,9 +95,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Backpack/CRUD/issues",
-                "source": "https://github.com/Laravel-Backpack/CRUD/tree/5.6.0"
+                "source": "https://github.com/Laravel-Backpack/CRUD/tree/5.5.8"
             },
-            "time": "2023-04-27T13:43:06+00:00"
+            "time": "2023-04-21T17:18:26+00:00"
         },
         {
             "name": "backpack/pro",

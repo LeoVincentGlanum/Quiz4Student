@@ -5,7 +5,12 @@
         </h2>
     </x-slot>
 
-
+    <div class="container">
+        <div class="row justify-content-center pt-1" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary col-4 m-1">Concept</button>
+            <button type="button" class="btn btn-primary col-3 m-1 active"><i class="fa-solid fa-house"></i></button>
+            <button type="button" class="btn btn-primary col-4 m-1">Cours</button>
+        </div>
         {{--Concept--}}
         <h1 class="display-6 mt-1">Listes de vos concept</h1>
         <ol class="list-group list-group-numbered mt-1 mb-3">

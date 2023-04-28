@@ -16,4 +16,9 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+    Route::crud('cours', 'CoursCrudController');
+    Route::crud('theme', 'ThemeCrudController');
+    Route::crud('question', 'QuestionCrudController');
+    Route::crud('concept', 'ConceptCrudController');
+    Route::get('/showImportData',[\App\Http\Controllers\ImportController::class,'show'])->name('showImportData');
 }); // this should be the absolute last line of this file
