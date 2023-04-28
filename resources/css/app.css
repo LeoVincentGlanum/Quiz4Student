@@ -1,3 +1,105 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root{
+/*VAR*/
+    --qs-modal-bg-color:#FDFDFD;
+    --qs-reviser-bg-color:#7E7C7C;
+    --qs-global-bg-color:#D9D9D9
+}
+
+.btn{
+    border-radius: 0;
+    color: black;
+}
+
+.btn.active{
+    border-radius: 0;
+    color: white;
+}
+
+.qs-bck-ground{
+    background-color: var(--qs-global-bg-color);
+}
+
+.qs-badge-comprehension{
+    background: rgba(255, 0, 0, 0.4);
+    border: 1px solid #000000;
+    border-radius: 50px;
+    color: black;
+}
+
+.qs-badge-initiation{
+    background: rgba(255, 140, 5, 0.4);
+    border: 1px solid #000000;
+    border-radius: 50px;
+    color: black;
+}
+
+.qs-badge-maitrise{
+    background: rgba(59, 167, 8, 0.4);
+    border: 1px solid #000000;
+    border-radius: 50px;
+    color: black;
+}
+
+.qs-badge-oubli{
+    background: rgba(0, 100, 251, 0.4);
+    border: 1px solid #000000;
+    border-radius: 50px;
+    color: black;
+}
+
+
+.qs-btn-reviser{
+    background: var(--qs-reviser-bg-color);
+    border: 1px solid #000000;
+    border-radius: 15px;
+    color: black;
+}
+
+.qs-bck-ground-modal{
+    background: var(--qs-modal-bg-color);
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.qs-vertical-center{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+label{
+    color: #000000 !important;
+}
+
+input{
+    background: #D9D9D9!important;
+    border: 1px solid #000000!important;
+    border-radius: 5px!important;
+    color: black!important;
+}
+
+.qs-btn-login{
+    background: var(--qs-reviser-bg-color)!important;
+    border: 1px solid #000000!important;
+    border-radius: 15px!important;
+    color: white!important;
+}
+
+.qs-header-banner{
+    height: 44px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53e7bc989f41b0feadeca62f8de16916",
+    "content-hash": "7ccf0dd1a112162dcba2bd700388e64e",
     "packages": [
         {
             "name": "backpack/crud",
-            "version": "5.5.8",
+            "version": "5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/CRUD.git",
-                "reference": "00c96c69a193ee91cd8e2752cf884290724fa779"
+                "reference": "5316015407af80934be4f66c65176447cce5ef85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/00c96c69a193ee91cd8e2752cf884290724fa779",
-                "reference": "00c96c69a193ee91cd8e2752cf884290724fa779",
+                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/5316015407af80934be4f66c65176447cce5ef85",
+                "reference": "5316015407af80934be4f66c65176447cce5ef85",
                 "shasum": ""
             },
             "require": {
@@ -95,9 +95,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Backpack/CRUD/issues",
-                "source": "https://github.com/Laravel-Backpack/CRUD/tree/5.5.8"
+                "source": "https://github.com/Laravel-Backpack/CRUD/tree/5.6.0"
             },
-            "time": "2023-04-21T17:18:26+00:00"
+            "time": "2023-04-27T13:43:06+00:00"
         },
         {
             "name": "backpack/pro",
