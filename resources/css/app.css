@@ -120,3 +120,7 @@ label {
     background-color: var(--bs-btn-active-bg) !important;
     border-color: var(--bs-btn-active-border-color);
 }
+
+input {
+    background-color: transparent!important;
+}
