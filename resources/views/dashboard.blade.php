@@ -21,7 +21,7 @@
                         <div class="ms-2 me-auto">
                             <div class="fw-bold"> {{$concept->label}}</div>
                         </div>
-                        <span class="badge qs-badge-comprehension">Compréhension</span>
+                        <span class="badge bg-primary">Comp</span>
                     </li>
                 </a>
             @endforeach
