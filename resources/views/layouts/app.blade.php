@@ -27,7 +27,7 @@
                 <a href="{{route('concept.index')}}" class="btn btn-outline-primary col-4 qs-little-m-1 {{ in_array(request()->route()->getName(),["concept.index","show.concept.questions"]) ? 'active' : '' }}">Concept</a>
                 <a href="{{route('dashboard')}}" class="btn btn-outline-primary col-3 qs-little-m-1 {{ request()->route()->getName()=="dashboard" ? 'active' : '' }}"><i
                         class="fa-solid fa-house text-light"></i></a>
-                <a href="{{route('concept.index')}}" type="button" class="btn btn-outline-info col-4 qs-little-m-1 {{ request()->route()->getName()=="concept.index" ? 'active' : '' }}">Cours</a>
+                <a href="{{route('cours.index')}}" type="button" class="btn btn-outline-info col-4 qs-little-m-1 {{ request()->route()->getName()=="cours.index" ? 'active' : '' }}">Cours</a>
             </div>
             @if (isset($header))
 

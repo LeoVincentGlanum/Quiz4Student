@@ -1,44 +1,38 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Concept') }}
+            {{ __('Cours') }}
         </h2>
     </x-slot>
 
     <div class="container">
 
 
-        {{--Concept--}}
+        {{--cours--}}
 
-        <h1 class="display-6 mt-1">Les concept</h1>
+        <h1 class="display-6 mt-1">Les cours</h1>
         <ol class="list-group  mt-1 mb-3">
             @php
-                $concepts = \App\Models\Concept::all();
+                $courses = \App\Models\Cours::all()->take(7);
             @endphp
 
-            @foreach($concepts as $concept)
-                <a href="{{route('show.concept.questions',['id' => $concept->id])}}">
-                    <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                        <input class="form-check-input" type="checkbox" value="" id="checkbox{{$concept->id}}">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <label class="form-check-label text-light" for="checkbox{{$concept->id}}">
-                                    {{$concept->label}}
-                                </label>
-                            </div>
+            @foreach($courses as $course)
+                <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">
+                            {{$course->label}}
                         </div>
-                        <span class="badge bg-primary">Comp</span>
-                    </li>
-                </a>
+                    </div>
+                    <span class="badge bg-primary">Comp</span>
+                </li>
             @endforeach
         </ol>
 
 
         <div class="d-flex justify-content-between mt-3">
-            <button type="button" class="btn btn-primary">Tout réviser</button>
+            <div></div>
             <button type="button" class="btn btn-info">Réviser</button>
         </div>
-
 
         {{--SCORE--}}
             <div class="row justify-content-center p-1" role="group" aria-label="Basic example">
@@ -53,8 +47,6 @@
 
             </div>
     </div>
-
-
 
 
 </x-app-layout>
