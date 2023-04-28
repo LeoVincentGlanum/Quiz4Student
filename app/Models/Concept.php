@@ -20,7 +20,7 @@ class Concept extends Model
     }
 
     public function questions(){
-        return $this->belongsTo(Question::class²);
+        return $this->hasMany(Question::class);
     }
 
 }

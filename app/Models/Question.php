@@ -26,6 +26,6 @@ class Question extends Model
 
     public function concept()
     {
-        return $this->hasOne(Concept::class);
+        return $this->belongsTo(Concept::class);
     }
 }

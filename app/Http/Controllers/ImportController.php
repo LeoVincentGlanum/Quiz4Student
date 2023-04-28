@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Concept;
 use App\Models\ConceptsThemes;
+use App\Models\Question;
 use App\Models\Theme;
 use Illuminate\Http\Request;
 
@@ -47,6 +48,34 @@ class ImportController extends Controller
             $feedback = Arr::get($ligne,'Feedback');
             $theme1 = Arr::get($ligne,'Theme1');  // done
             $theme2 = Arr::get($ligne,'Theme2'); // done
+
+            $reponsesJson =
+                [
+                    [
+                        "name" => $ReponseGood,
+                        "is_good" => 1
+                    ],
+                    [
+                        "name" => $Reponse2,
+                        "is_good" => 0
+                    ],
+                    [
+                        "name" => $Reponse3,
+                        "is_good" => 0
+                    ],
+                    [
+                        "name" => $Reponse4,
+                        "is_good" => 0
+                    ],
+                    [
+                        "name" => $Reponse5,
+                        "is_good" => 0
+                    ]
+                ];
+
+
+
+
 
             $searchConcept = Concept::query()->where('label','=',$conceptLabel)->first();
             if ($searchConcept === null){
@@ -96,7 +125,12 @@ class ImportController extends Controller
                 }
             }
 
-
+            $newQuestion = new Question();
+            $newQuestion->label = $questionLabel;
+            $newQuestion->concept_id = $searchConcept->id;
+            $newQuestion->feedback = $feedback;
+            $newQuestion->reponses = $reponsesJson;
+            $newQuestion->save();
 
         }
 

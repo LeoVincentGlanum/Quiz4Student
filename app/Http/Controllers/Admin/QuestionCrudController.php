@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\QuestionRequest;
 use App\Models\Concept;
+use App\Models\Question;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use GuzzleHttp\Psr7\Request;
@@ -20,6 +21,8 @@ class QuestionCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -63,7 +66,6 @@ class QuestionCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(QuestionRequest::class);
-
         CRUD::field('concept_id')->type('select')->entity('concept')->attribute('label')->model(Concept::class);
         CRUD::field('label');
         CRUD::field('feedback');
@@ -97,6 +99,25 @@ class QuestionCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function store(\Illuminate\Http\Request $request)
+    {
+        //dd($request);
+        $concept_id = $request->input('concept_id');
+        $label = $request->input('label');
+        $feedback = $request->input('feedback');
+        $reponses = $request->input('reponses');
+
+        $newQuestion = new Question();
+        $newQuestion->concept_id = $concept_id;
+        $newQuestion->label = $label;
+        $newQuestion->feedback = $feedback;
+        $newQuestion->reponses = $reponses;
+        $newQuestion->save();
+
+        return redirect()->to( backpack_url('question'));
+
     }
 
 
