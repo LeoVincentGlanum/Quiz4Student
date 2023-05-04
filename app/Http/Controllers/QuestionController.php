@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Concept;
+use App\Models\Parametre;
 use App\Models\Question;
 use App\Models\QuestionMaitriseUser;
+use App\Models\Questionnaire;
 use App\Models\ReponseUser;
 use App\Models\Theme;
 use Carbon\Carbon;
@@ -64,20 +66,21 @@ class QuestionController extends Controller
 
 
 
-        $collectionFinal = $collectionGlobal->take(1);
+        $collectionFinal = $collectionGlobal;
 
         if (count($collectionGlobal) !== 0){
 
             $questions = $collectionFinal;
         } else {
             $questions =   $questions->shuffle();
-            $questions = $questions->take(1);
+            $questions = $questions;
         }
 
         // $reponsesLast : question foirée la derniere fois
        // dd($questionFoirees->get());
 
         /* ORDRE */
+
         /*
          * Mal répondu la dernière fois
          * Jamais posé
@@ -86,6 +89,62 @@ class QuestionController extends Controller
          * Maitrise 4 fois sur les 5
          */
 
+        $questionsBase = Question::query()->whereNotIn('id',$questions->pluck('id'))->where('concept_id','=',$concept->id)->get();
+
+        $param = Parametre::query()->where('key','=','nbQuestions')->first();
+        $param = intval($param->value);
+
+        $arrayId = [];
+        if (count($questions) < $param){
+            //dd($questionsBase);
+            $cpt = 0;
+            foreach ($questions as $question){
+                $arrayId[] =  [
+                    "id" => $question->id,
+                    "status" => "todo"
+                ];
+                $cpt++;
+            }
+            foreach ($questionsBase as $question){
+                if ($cpt === $param){
+                    break;
+                }
+                $arrayId[] = [
+                    "id" => $question->id,
+                    "status" => "todo"
+                            ];
+                $cpt++;
+            }
+
+        }
+
+
+        $searchQuestionnaire = Questionnaire::query()
+            ->where('user_id','=',Auth::user()->id)
+            ->first();
+
+
+        $idConcept = null;
+        if ($searchQuestionnaire !== null) {
+            $idConcept = (Arr::get($searchQuestionnaire->concepts_id,0));
+        }
+
+        if ($idConcept !== null){
+            $searchQuestionnaire->questions_id = $arrayId;
+            $searchQuestionnaire->user_id = Auth::user()->id;
+            $searchQuestionnaire->save();
+        } else {
+            $newQuestionnaire = new Questionnaire();
+            $newQuestionnaire->concepts_id = [ $concept->id ];
+            $newQuestionnaire->questions_id = $arrayId;
+            $newQuestionnaire->user_id = Auth::user()->id;
+            $newQuestionnaire->save();
+        }
+
+
+
+
+      return redirect()->route('questionnaire');
 
 
 
@@ -140,6 +199,32 @@ class QuestionController extends Controller
                     $newQuestionMatriseUser->save();
                 }
 
+
+
+                $questionnaire = Questionnaire::query()->where('user_id','=',Auth::id())->first();
+                $ArrayQuestions = $questionnaire->questions_id;
+
+                $idQuestion = [];
+                foreach ($ArrayQuestions as $questionUnique){
+                    $idQuestion = Arr::get($questionUnique,'id');
+
+
+                    if ($idQuestion === $question->id){
+                        $arrayId[] = [
+                            "id" => $idQuestion,
+                            "status" => "done"
+                        ];
+                    } else {
+                        $arrayId[] = [
+                            "id" => $idQuestion,
+                            "status" =>  Arr::get($questionUnique,'status')
+                        ];
+                    }
+                }
+
+                $questionnaire->questions_id = $arrayId;
+                $questionnaire->save();
+
                 return view('responsesView')->with(['question' => $question , 'reponseUser' => $reponse->uuid , 'concept' => $concept, 'reponsesUser' => $reponsesUser]);
             }
 
@@ -150,4 +235,43 @@ class QuestionController extends Controller
     public function responsesView(Request $request){
 
     }
+
+
+    public function questionnaire(){
+
+        $questionaire = Questionnaire::query()
+            ->where('user_id','=',Auth::id())
+            ->first();
+
+        $concept_ids = $questionaire->concepts_id;
+        foreach ($concept_ids as $concept_id){
+            $concept = Concept::find($concept_id);
+
+        }
+
+        $questions_id = $questionaire->questions_id;
+        foreach ($questions_id as $key => $item){
+            if (Arr::get($item,'status') !== "todo"){
+                unset($questions_id[$key]);
+            }
+        }
+
+        $questions = Arr::first($questions_id);
+
+        $conceptA =  Arr::first($questions_id);
+        $idQuestion = (Arr::get($conceptA,'id'));
+
+        $question = Question::find($idQuestion);
+        $questions = Question::query()->where('id','=',$idQuestion)->get();
+
+
+
+        return view('questionnaire.show_questions')->with(['concept' => $concept, 'questions' => $questions]);
+
+
+
+
+
+    }
+
 }

@@ -37,6 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/reponses/{id}/{question}',[\App\Http\Controllers\QuestionController::class,'reponse'])->name('new.response');
     Route::get('/responsesView',[\App\Http\Controllers\QuestionController::class,'responsesView'])->name('responsesView');
 
+    Route::get('/questionnaire',[\App\Http\Controllers\QuestionController::class,'questionnaire'])->name('questionnaire');
+
+
+
 
 
 

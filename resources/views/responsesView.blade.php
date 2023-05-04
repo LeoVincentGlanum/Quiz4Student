@@ -62,7 +62,7 @@
         </div>
 
         <div class="flex justify-content-center mt-2">
-            <a href="{{route('show.concept.questions',['id' => $concept->id])}}"><button class="btn btn-primary">Question suivante</button></a>
+            <a href="{{route('questionnaire')}}"><button class="btn btn-primary">Question suivante</button></a>
         </div>
 
     </div>
