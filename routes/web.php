@@ -43,6 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/multiConcept',[\App\Http\Controllers\QuestionController::class,'multiConcept'])->name('multiConcept');
 
 
+    Route::get('/coursReponse',[\App\Http\Controllers\QuestionController::class,'cours'])->name('coursReponse');
+
+
 
 
 

@@ -101,7 +101,7 @@
                     @endphp
 
 
-
+                    <a href="{{route('coursReponse',['cours' => $item->id])}}">
                     <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">{{$item->label}}</div>
@@ -133,6 +133,7 @@
                             }
                         @endphp
                     </li>
+                    </a>
                 @endforeach
             </ol>
 
