@@ -70,7 +70,7 @@
                         }
                     @endphp
                     <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                        <input class="form-check-input" type="checkbox" value="" id="checkbox{{$concept->id}}">
+                        <input class="form-check-input" name="idConcepts[]" type="checkbox" value="{{$concept->id}}" id="checkbox{{$concept->id}}">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <label class="form-check-label text-light" for="checkbox{{$concept->id}}">
