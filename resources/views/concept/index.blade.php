@@ -5,13 +5,15 @@
         </h2>
     </x-slot>
 
-    <div class="container d-flex flex-column justify-content-between full-height-screen">
-
+    <div class="container ">
+        <form method="post" action="{{route("multiConcept")}}" class="d-flex flex-column justify-content-between full-height-screen">
+            @csrf
         <div>
 
             {{--Concept--}}
 
             <h1 class="display-6 mt-1">Les concept</h1>
+
             <ol class="list-group  mt-1 " style="max-height: 560px;overflow: auto;">
                 @php
                     $concepts = \App\Models\Concept::all();
@@ -67,44 +69,42 @@
 
                         }
                     @endphp
-                    <a href="{{route('show.concept.questions',['id' => $concept->id])}}">
-                        <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                            <input class="form-check-input" type="checkbox" value="" id="checkbox{{$concept->id}}">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">
-                                    <label class="form-check-label text-light" for="checkbox{{$concept->id}}">
-                                        {{$concept->label}}
-                                    </label>
-                                </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                        <input class="form-check-input" name="idConcepts[]" type="checkbox" value="{{$concept->id}}" id="checkbox{{$concept->id}}">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <label class="form-check-label text-light" for="checkbox{{$concept->id}}">
+                                    {{$concept->label}}
+                                </label>
                             </div>
-                            @php
-                                if($state=="Initiation"){
-                                    $nbInit++;
-                            @endphp
-                            <span class="badge bg-danger">Init</span>
-                            @php
-                                }
-                                elseif ($state=="Compréhension"){
-                                    $nbComp++;
-                            @endphp
-                            <span class="badge bg-primary">Comp</span>
-                            @php
-                                }
-                                elseif ($state=="Oublie"){
-                                    $nbOubli++;
-                            @endphp
-                            <span class="badge bg-info">Oubl</span>
-                            @php
-                                }
-                                else{
-                                    $nbMaitre++;
-                            @endphp
-                            <span class="badge bg-success">Mtrs</span>
-                            @php
-                                }
-                            @endphp
-                        </li>
-                    </a>
+                        </div>
+                        @php
+                            if($state=="Initiation"){
+                                $nbInit++;
+                        @endphp
+                        <span class="badge bg-danger">Init</span>
+                        @php
+                            }
+                            elseif ($state=="Compréhension"){
+                                $nbComp++;
+                        @endphp
+                        <span class="badge bg-primary">Comp</span>
+                        @php
+                            }
+                            elseif ($state=="Oublie"){
+                                $nbOubli++;
+                        @endphp
+                        <span class="badge bg-info">Oubl</span>
+                        @php
+                            }
+                            else{
+                                $nbMaitre++;
+                        @endphp
+                        <span class="badge bg-success">Mtrs</span>
+                        @php
+                            }
+                        @endphp
+                    </li>
                 @endforeach
             </ol>
 
@@ -113,8 +113,8 @@
 
         <div>
             <div class="d-flex justify-content-between ">
-                <button type="button" class="btn btn-primary">Tout réviser</button>
-                <button type="button" class="btn btn-info">Réviser</button>
+                <button  type="button" class="btn btn-primary">Tout réviser</button>
+                <button type="input" class="btn btn-info">Réviser</button>
             </div>
             {{--SCORE--}}
 
@@ -131,6 +131,8 @@
 
             </div>
         </div>
+        </form>
+
 
     </div>
 
