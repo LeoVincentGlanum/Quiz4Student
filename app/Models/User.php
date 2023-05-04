@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    use CrudTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -41,4 +43,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function nbReponses(){
+       return ReponseUser::query()->where('user_id','=',$this->id)->count();
+    }
+
+    public function questionMaitrise(){
+        $questions = QuestionMaitriseUser::query()->where('user_id','=',$this->id)->count();
+
+        $questionAll = Question::all()->count();
+
+        return $questions." sur ".$questionAll." questions";
+    }
 }

@@ -22,4 +22,5 @@ Route::group([
     Route::crud('concept', 'ConceptCrudController');
     Route::get('/showImportData',[\App\Http\Controllers\ImportController::class,'show'])->name('showImportData');
     Route::get('/parameters',[\App\Http\Controllers\ParametersController::class,'showParameters'])->name('parameters');
+    Route::crud('user', 'UserCrudController');
 }); // this should be the absolute last line of this file

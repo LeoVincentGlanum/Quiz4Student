@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Concept;
 use App\Models\Question;
+use App\Models\QuestionMaitriseUser;
 use App\Models\ReponseUser;
 use App\Models\Theme;
 use Carbon\Carbon;
@@ -16,10 +17,14 @@ class QuestionController extends Controller
     public function show($id){
 
         $concept = Concept::find($id);
-        $questions = Question::query()->where('concept_id','=',$concept->id)->limit(1)->get();
+
+        $collectionGlobal = collect();
+
+        $questionMaitrise = QuestionMaitriseUser::all()->pluck('question_id');
 
 
-        $questions = Question::query()->where('concept_id','=',$concept->id)->get();
+
+        $questions = Question::query()->whereNotIn('id',$questionMaitrise)->where('concept_id','=',$concept->id)->get();
         $reponsesLast = collect();
         foreach ($questions as $question){
             $lastResponse = ReponseUser::query()
@@ -27,29 +32,50 @@ class QuestionController extends Controller
                 ->where('question_id','=',$question->id)
                 ->orderBy('created_at','desc')
                 ->first();
+
             if ($lastResponse !== null){
+
                 $reponsesLast->add($lastResponse);
             }
 
         }
 
-        // $reponsesLast : question foirée la derniere fois
 
-        $reponsesAllId = ReponseUser::all()->pluck('question_id');
+        $reponsesAllId = ReponseUser::query()->where('user_id','=',Auth::user()->id)->get()->pluck('question_id');
 
-        $questionWithoutResponse = Question::query()->whereIn('id',$reponsesAllId)->where('concept_id','=',$concept->id)->get();
+        $questionWithoutResponse = Question::query()->whereNotIn('id',$reponsesAllId)->where('concept_id','=',$concept->id)->get();
         // question jamais répondu
 
-
-        dd($questionWithoutResponse);
-
-
-        $reponsesQuestions = ReponseUser::query()->where('is_good','=',0)->pluck('question_id')->unique();
+        foreach ($questionWithoutResponse as $item){
+            $collectionGlobal->add($item);
+        }
 
 
+       // dd($questionWithoutResponse);
 
 
-        dd($reponsesQuestions);
+        $reponses =  $reponsesLast->where('is_good','=',0);
+
+        $questionFoirees =  Question::query()->whereIn('id',$reponses->pluck('question_id'))->get();
+
+        foreach ($questionFoirees as $item){
+            $collectionGlobal->add($item);
+        }
+
+
+
+        $collectionFinal = $collectionGlobal->take(1);
+
+        if (count($collectionGlobal) !== 0){
+
+            $questions = $collectionFinal;
+        } else {
+            $questions =   $questions->shuffle();
+            $questions = $questions->take(1);
+        }
+
+        // $reponsesLast : question foirée la derniere fois
+       // dd($questionFoirees->get());
 
         /* ORDRE */
         /*
@@ -60,9 +86,12 @@ class QuestionController extends Controller
          * Maitrise 4 fois sur les 5
          */
 
-        $question = $questions[0];
 
-        return view('concept.show_questions')->with(['concept' => $concept, 'question' => $question]);
+
+
+
+      //  $questions = Question::query()->where('concept_id','=',$concept->id)->limit(1)->get();
+        return view('concept.show_questions')->with(['concept' => $concept, 'questions' => $questions]);
     }
 
     public function reponse($id,$question){
@@ -102,7 +131,14 @@ class QuestionController extends Controller
 
                 $reponsesUser = ReponseUser::query()->where('user_id','=',Auth::user()->id)->where('question_id','=',$question->id)->orderBy('id','desc')->get();
 
+                $maitrise = $reponsesUser->take(4)->where('is_good',"=",1)->count();
 
+                if ($maitrise == 4){
+                    $newQuestionMatriseUser = new QuestionMaitriseUser();
+                    $newQuestionMatriseUser->user_id = Auth::user()->id;
+                    $newQuestionMatriseUser->question_id = $question->id;
+                    $newQuestionMatriseUser->save();
+                }
 
                 return view('responsesView')->with(['question' => $question , 'reponseUser' => $reponse->uuid , 'concept' => $concept, 'reponsesUser' => $reponsesUser]);
             }
