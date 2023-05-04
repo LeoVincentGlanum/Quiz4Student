@@ -274,4 +274,145 @@ class QuestionController extends Controller
 
     }
 
+
+    public function multiConcept(Request $request){
+
+
+        $concepts_id  = $request->input('idConcepts');
+
+
+
+        $concept = Concept::query()->whereIn('id',$concepts_id)->get();
+
+
+        $collectionGlobal = collect();
+
+        $questionMaitrise = QuestionMaitriseUser::all()->pluck('question_id');
+
+
+
+        $questions = Question::query()->whereNotIn('id',$questionMaitrise)->whereIn('concept_id',$concepts_id)->get();
+        $reponsesLast = collect();
+        foreach ($questions as $question){
+            $lastResponse = ReponseUser::query()
+                ->where('user_id','=',Auth::user()->id)
+                ->where('question_id','=',$question->id)
+                ->orderBy('created_at','desc')
+                ->first();
+
+            if ($lastResponse !== null){
+
+                $reponsesLast->add($lastResponse);
+            }
+
+        }
+
+
+        $reponsesAllId = ReponseUser::query()->where('user_id','=',Auth::user()->id)->get()->pluck('question_id');
+
+        $questionWithoutResponse = Question::query()->whereNotIn('id',$reponsesAllId)->whereIn('concept_id',$concepts_id)->get();
+        // question jamais répondu
+
+        foreach ($questionWithoutResponse as $item){
+            $collectionGlobal->add($item);
+        }
+
+
+        // dd($questionWithoutResponse);
+
+
+        $reponses =  $reponsesLast->where('is_good','=',0);
+
+        $questionFoirees =  Question::query()->whereIn('id',$reponses->pluck('question_id'))->get();
+
+        foreach ($questionFoirees as $item){
+            $collectionGlobal->add($item);
+        }
+
+
+
+        $collectionFinal = $collectionGlobal;
+
+        if (count($collectionGlobal) !== 0){
+
+            $questions = $collectionFinal;
+        } else {
+            $questions =   $questions->shuffle();
+            $questions = $questions;
+        }
+
+        // $reponsesLast : question foirée la derniere fois
+        // dd($questionFoirees->get());
+
+        /* ORDRE */
+
+        /*
+         * Mal répondu la dernière fois
+         * Jamais posé
+         * Question découverte (répondu qu'une fois sur les 5 derniers quizz du concept
+         * Question Comprise (répondu 2 fois sur les 5)
+         * Maitrise 4 fois sur les 5
+         */
+
+        $questionsBase = Question::query()->whereNotIn('id',$questions->pluck('id'))->where('concept_id',$concepts_id)->get();
+
+        $param = Parametre::query()->where('key','=','nbQuestions')->first();
+        $param = intval($param->value);
+
+        $arrayId = [];
+        if (count($questions) < $param){
+            //dd($questionsBase);
+            $cpt = 0;
+            foreach ($questions as $question){
+                $arrayId[] =  [
+                    "id" => $question->id,
+                    "status" => "todo"
+                ];
+                $cpt++;
+            }
+            foreach ($questionsBase as $question){
+                if ($cpt === $param){
+                    break;
+                }
+                $arrayId[] = [
+                    "id" => $question->id,
+                    "status" => "todo"
+                ];
+                $cpt++;
+            }
+
+        }
+
+
+        $searchQuestionnaire = Questionnaire::query()
+            ->where('user_id','=',Auth::user()->id)
+            ->first();
+
+
+        $idConcept = null;
+        if ($searchQuestionnaire !== null) {
+            $idConcept = (Arr::get($searchQuestionnaire->concepts_id,0));
+        }
+
+        if ($idConcept !== null){
+            $searchQuestionnaire->questions_id = $arrayId;
+            $searchQuestionnaire->user_id = Auth::user()->id;
+            $searchQuestionnaire->save();
+        } else {
+            $newQuestionnaire = new Questionnaire();
+            $newQuestionnaire->concepts_id = [ $concept->id ];
+            $newQuestionnaire->questions_id = $arrayId;
+            $newQuestionnaire->user_id = Auth::user()->id;
+            $newQuestionnaire->save();
+        }
+
+
+
+
+        return redirect()->route('questionnaire');
+
+
+
+    }
+
 }

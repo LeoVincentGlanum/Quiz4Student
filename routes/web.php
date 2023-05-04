@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
 Route::get('/dashboard', function () {
@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/responsesView',[\App\Http\Controllers\QuestionController::class,'responsesView'])->name('responsesView');
 
     Route::get('/questionnaire',[\App\Http\Controllers\QuestionController::class,'questionnaire'])->name('questionnaire');
+
+
+    Route::post('/multiConcept',[\App\Http\Controllers\QuestionController::class,'multiConcept'])->name('multiConcept');
 
 
 
