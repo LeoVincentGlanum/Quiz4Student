@@ -16,7 +16,40 @@ class QuestionController extends Controller
     public function show($id){
 
         $concept = Concept::find($id);
+        $questions = Question::query()->where('concept_id','=',$concept->id)->limit(1)->get();
+
+
         $questions = Question::query()->where('concept_id','=',$concept->id)->get();
+        $reponsesLast = collect();
+        foreach ($questions as $question){
+            $lastResponse = ReponseUser::query()
+                ->where('user_id','=',Auth::user()->id)
+                ->where('question_id','=',$question->id)
+                ->orderBy('created_at','desc')
+                ->first();
+            if ($lastResponse !== null){
+                $reponsesLast->add($lastResponse);
+            }
+
+        }
+
+        // $reponsesLast : question foirée la derniere fois
+
+        $reponsesAllId = ReponseUser::all()->pluck('question_id');
+
+        $questionWithoutResponse = Question::query()->whereIn('id',$reponsesAllId)->where('concept_id','=',$concept->id)->get();
+        // question jamais répondu
+
+
+        dd($questionWithoutResponse);
+
+
+        $reponsesQuestions = ReponseUser::query()->where('is_good','=',0)->pluck('question_id')->unique();
+
+
+
+
+        dd($reponsesQuestions);
 
         /* ORDRE */
         /*
@@ -47,27 +80,36 @@ class QuestionController extends Controller
 
                     $newResponse =  new ReponseUser();
                     $newResponse->question_id = $question->id;
-                    $newResponse->reponse = true;
+                    $newResponse->is_good = true;
                     $newResponse->user_id = Auth::user()->id;
-                    $newResponse->dateRepondu = Carbon::now()->toDateTime();
+                    $newResponse->date_repondu = Carbon::now()->toDateTime();
                     $newResponse->save();
-
-                    return view('responsesView')->with(['question_id' => $question->id , $newResponse]);
 
                 } else {
 
                     $newResponse =  new ReponseUser();
                     $newResponse->question_id = $question->id;
-                    $newResponse->reponse = false;
+                    $newResponse->is_good = false;
                     $newResponse->user_id = Auth::user()->id;
-                    $newResponse->dateRepondu = Carbon::now()->toDateTime();
+                    $newResponse->date_repondu = Carbon::now()->toDateTime();
                     $newResponse->save();
 
-                    return view('responsesView')->with(['question_id' => $question->id , $newResponse]);
                 }
+
+                $concept = Concept::find($question->concept_id);
+
+                $reponsesUser = ReponseUser::query()->where('user_id','=',Auth::user()->id)->where('question_id','=',$question->id)->orderBy('id','desc')->get();
+
+
+
+                return view('responsesView')->with(['question' => $question , 'reponseUser' => $reponse->uuid , 'concept' => $concept, 'reponsesUser' => $reponsesUser]);
             }
 
         }
+
+    }
+
+    public function responsesView(Request $request){
 
     }
 }

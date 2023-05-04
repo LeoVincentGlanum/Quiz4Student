@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/cours', [\App\Http\Controllers\CoursController::class, 'index'])->name('cours.index');
     //Reponses
     Route::get('/reponses/{id}/{question}',[\App\Http\Controllers\QuestionController::class,'reponse'])->name('new.response');
+    Route::get('/responsesView',[\App\Http\Controllers\QuestionController::class,'responsesView'])->name('responsesView');
+
+
+
 
 });
 
