@@ -12,7 +12,7 @@
             {{--cours--}}
 
             <h1 class="display-6 mt-1">Les cours</h1>
-            <ol class="list-group  mt-1 mb-3">
+            <ol class="list-group  mt-1 mb-3" style="max-height: 560px;overflow: auto;">
                 @php
                     $courses = \App\Models\Cours::all()->take(7);
                 @endphp
