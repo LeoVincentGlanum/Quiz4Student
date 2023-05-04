@@ -50,24 +50,20 @@
 
                         @endphp
                     @endforeach
-
                     @php
                         $state="";
-                        if($nbMaitriseQuest == $nbQuestion){
-                            $state="Maitrise";
-                            $nbMaitre++;
-                        }
+
                         if(!$isOneFalse && $isgoodForAll){
                             $state="Compréhension";
-                            $nbComp++;
+                        }
+                        if($nbMaitriseQuest == $nbQuestion){
+                            $state="Maitrise";
                         }
                         if(($nbOublie*100)/$nbQuestion){
                             $state="Oublie";
-                            $nbOubli++;
                         }
                         if($state==""){
                             $state="Initiation";
-                            $nbInit++;
 
                         }
                     @endphp
@@ -83,21 +79,25 @@
                             </div>
                             @php
                                 if($state=="Initiation"){
+                                    $nbInit++;
                             @endphp
                             <span class="badge bg-danger">Init</span>
                             @php
                                 }
                                 elseif ($state=="Compréhension"){
+                                    $nbComp++;
                             @endphp
                             <span class="badge bg-primary">Comp</span>
                             @php
                                 }
                                 elseif ($state=="Oublie"){
+                                    $nbOubli++;
                             @endphp
                             <span class="badge bg-info">Oubl</span>
                             @php
                                 }
                                 else{
+                                    $nbMaitre++;
                             @endphp
                             <span class="badge bg-success">Mtrs</span>
                             @php

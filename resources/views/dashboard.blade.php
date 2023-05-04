@@ -48,24 +48,20 @@
 
                         @endphp
                     @endforeach
-
                     @php
                         $state="";
-                        if($nbMaitriseQuest == $nbQuestion){
-                            $state="Maitrise";
-                            $nbMaitre++;
-                        }
+
                         if(!$isOneFalse && $isgoodForAll){
                             $state="Compréhension";
-                            $nbComp++;
+                        }
+                        if($nbMaitriseQuest == $nbQuestion){
+                            $state="Maitrise";
                         }
                         if(($nbOublie*100)/$nbQuestion){
                             $state="Oublie";
-                            $nbOubli++;
                         }
                         if($state==""){
                             $state="Initiation";
-                            $nbInit++;
 
                         }
                     @endphp
@@ -77,21 +73,25 @@
                             </div>
                             @php
                                 if($state=="Initiation"){
+                                    $nbInit++;
                             @endphp
                             <span class="badge bg-danger">Init</span>
                             @php
                                 }
                                 elseif ($state=="Compréhension"){
+                                    $nbComp++;
                             @endphp
                             <span class="badge bg-primary">Comp</span>
                             @php
                                 }
                                 elseif ($state=="Oublie"){
+                                    $nbOubli++;
                             @endphp
                             <span class="badge bg-info">Oubl</span>
                             @php
                                 }
                                 else{
+                                    $nbMaitre++;
                             @endphp
                             <span class="badge bg-success">Mtrs</span>
                             @php
@@ -314,7 +314,8 @@
                         class="badge qs-bg-grey ">{{$nbMaitre}}</span></span>
             </div>
             <div class="row justify-content-center p-1" role="group" aria-label="Basic example">
-                <span class="badge bg-info col-12 w-100 ">Oubli <span class="badge qs-bg-grey ">{{$nbOubli}}</span></span>
+                <span class="badge bg-info col-12 w-100 ">Oubli <span
+                        class="badge qs-bg-grey ">{{$nbOubli}}</span></span>
 
             </div>
         </div>
