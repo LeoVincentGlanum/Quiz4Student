@@ -6,12 +6,14 @@
     </x-slot>
 
     <div class="container d-flex flex-column justify-content-between full-height-screen">
-
+        <form method="post" action="{{route("multiConcept")}}">
+            @csrf
         <div>
 
             {{--Concept--}}
 
             <h1 class="display-6 mt-1">Les concept</h1>
+
             <ol class="list-group  mt-1 " style="max-height: 560px;overflow: auto;">
                 @php
                     $concepts = \App\Models\Concept::all();
@@ -67,9 +69,10 @@
 
                         }
                     @endphp
+
                     <a href="{{route('show.concept.questions',['id' => $concept->id])}}">
                         <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                            <input class="form-check-input" type="checkbox" value="" id="checkbox{{$concept->id}}">
+                            <input class="form-check-input" name="idConcepts[]" type="checkbox" value="{{$concept->id}}" id="checkbox{{$concept->id}}">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">
                                     <label class="form-check-label text-light" for="checkbox{{$concept->id}}">
@@ -113,8 +116,8 @@
 
         <div>
             <div class="d-flex justify-content-between ">
-                <button type="button" class="btn btn-primary">Tout réviser</button>
-                <button type="button" class="btn btn-info">Réviser</button>
+                <button  type="button" class="btn btn-primary">Tout réviser</button>
+                <button type="input" class="btn btn-info">Réviser</button>
             </div>
             {{--SCORE--}}
 
@@ -131,8 +134,12 @@
 
             </div>
         </div>
+        </form>
+
 
     </div>
+
+
 
 
 </x-app-layout>
