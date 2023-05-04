@@ -58,7 +58,7 @@
                         if(!$isOneFalse && $isgoodForAll){
                             $state="Compréhension";
                         }
-                        if($nbMaitriseQuest == $nbQuestion){
+                        if($nbMaitriseQuest >= $nbQuestion){
                             $state="Maitrise";
                         }
                         if(($nbOublie*100)/$nbQuestion){

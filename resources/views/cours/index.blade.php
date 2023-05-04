@@ -64,7 +64,7 @@
                             @endphp
                         @endforeach
                         @php
-                            if($nbMaitriseQuest == $nbQuestion){
+                            if($nbMaitriseQuest >= $nbQuestion){
                                 $nbMaitriseCours++;
                                 $flag=true;
                             }
