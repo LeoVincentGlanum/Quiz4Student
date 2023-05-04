@@ -2,9 +2,11 @@
 
 @section('content')
 
-
-    <div class="container mt-5">
-        <h1>Concept : {{$concept->label}}</h1>
+    <div class="container mt-4">
+        <h1 class="m-2" style="display: flex;align-items: center;justify-content: space-between;">
+            <span>Concept : {{$concept->label}}</span>
+            <a href="{{route('dashboard')}}" ><i class="fa-solid fa-xmark fa-lg"></i></a>
+        </h1>
 
         <div class="d-flex flex-wrap justify-content-sm-between">
 

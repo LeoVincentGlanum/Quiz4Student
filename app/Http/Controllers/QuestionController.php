@@ -60,7 +60,9 @@ class QuestionController extends Controller
          * Maitrise 4 fois sur les 5
          */
 
-        return view('concept.show_questions')->with(['concept' => $concept, 'questions' => $questions]);
+        $question = $questions[0];
+
+        return view('concept.show_questions')->with(['concept' => $concept, 'question' => $question]);
     }
 
     public function reponse($id,$question){
