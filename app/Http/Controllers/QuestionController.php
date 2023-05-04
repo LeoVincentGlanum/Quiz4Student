@@ -195,7 +195,7 @@ class QuestionController extends Controller
 
                 $reponsesUser = ReponseUser::query()->where('user_id','=',Auth::user()->id)->where('question_id','=',$question->id)->orderBy('id','desc')->get();
 
-                $maitrise = $reponsesUser->take(4)->where('is_good',"=",1)->count();
+                $maitrise = $reponsesUser->take(5)->where('is_good',"=",1)->count();
 
                 if ($maitrise == 4){
                     $newQuestionMatriseUser = new QuestionMaitriseUser();

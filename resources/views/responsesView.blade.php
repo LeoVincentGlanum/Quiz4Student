@@ -55,17 +55,20 @@
                         @endif
                     @endforeach
                     </div>
+
+                    <div class="mt-2">
+                        Vous avez répondu {{$reponsesUser->count()}} fois à la question
+                        <br>
+                        <br>
+                        Au seins des 5 dernieres réponses vous avez eu {{$reponsesUser->take(4)->where('is_good',"=",1)->count() }} réponse juste.
+                    </div>
                 </div>
 
 
             @endif
         </div>
 
-        {{-- <div class="mt-2">
-            Vous avez répondu {{$reponsesUser->count()}} fois à la question
-            <br>
-            Au seins des 4 dernieres réponses vous avez eu {{$reponsesUser->take(4)->where('is_good',"=",1)->count() }} réponse juste.
-        </div> --}}
+     
 
         <div class="flex justify-content-center mt-2">
             <a href="{{route('questionnaire')}}"><button class="btn btn-primary  text-white">Question suivante</button></a>
