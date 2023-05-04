@@ -269,7 +269,7 @@ class QuestionController extends Controller
         return view('questionnaire.show_questions')->with(['concept' => $concept, 'questions' => $questions]);
 
 
-        
+
 
 
     }
@@ -279,10 +279,13 @@ class QuestionController extends Controller
 
 
         $concepts_id  = $request->input('idConcepts');
-
-
+        if(!isset($concepts_id)){
+            $concept = Concept::all()->random();
+            $concepts_id=[$concept->id];
+        }
 
         $concept = Concept::query()->whereIn('id',$concepts_id)->get();
+
 
 
         $collectionGlobal = collect();

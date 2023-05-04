@@ -318,7 +318,10 @@
             <div class="d-flex justify-content-between">
                 <div></div>
                 {{--            <button type="button" class="btn qs-btn-reviser">Tout réviser</button>--}}
-                <button type="button" class="btn btn-info">Réviser</button>
+                <form method="post" action="{{route("multiConcept")}}">
+                    @csrf
+                    <button type="input" class="btn btn-info">Réviser</button>
+                </form>
             </div>
 
             {{--SCORE--}}
