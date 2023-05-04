@@ -18,13 +18,12 @@
 
                         @php $array = Illuminate\Support\Arr::shuffle($question->reponses) @endphp
                         @php $is_win = 0; @endphp
-                        @foreach($array as $key => $reponse)
-                            @if(array_key_last($array) === $key)
-                                    <li @if($reponse->uuid === $reponseUser && $reponse->is_good == 0) class="list-group-item active" @elseif($reponse->uuid === $reponseUser && $reponse->is_good == 1)  @php $is_win = 1;@endphp class="list-group-item bg-success"  @else class="list-group-item"  @endif  >{{$reponse->name}}</li>
-                            @else
 
-                                    <li  @if($reponse->uuid === $reponseUser && $reponse->is_good == 0) class="list-group-item active" @elseif($reponse->uuid === $reponseUser && $reponse->is_good == 1)   @php $is_win = 1;@endphp class="list-group-item bg-success" @else class="list-group-item"  @endif  style="border-bottom: 1px solid #8c8c8c6e;">{{$reponse->name}}</li>
+                        @foreach($array as $key => $reponse)
+                            @if($reponseUser === $reponse->uuid)
+                            <li    @if($reponse->is_good == 0) class="list-group-item active" @elseif($reponse->is_good == 1)  @php $is_win = 1;@endphp class="list-group-item bg-success" @endif >{{$reponse->name}}</li>
                             @endif
+
                         @endforeach
                     </ul>
                 </div>
@@ -38,31 +37,38 @@
         <div  class="mt-3">
 
             @if($is_win === 1)
-                GG ! Bonne réponse !
+                <div class="alert alert-success">
+                    <strong>Bonne réponse !</strong>
+                    <div class="mt-2">Explication : {{ $question->feedback }}</div>
+                </div>
             @else
-                Perdu ! Mauvaise réponse
-                <br>
-                la bonne réponse était :
-                <br>
-                @foreach($question->reponses as $reponse)
-                    @if($reponse->is_good == 1)
-                        <ul class="list-group list-group-flush">
-                         <li class="list-group-item bg-success">{{$reponse->name}} </li>
-                        </ul>
+                <div class="alert alert-primary">
+                    <strong>Perdu ! Mauvaise réponse</strong>
+                    <div class="mt-2">Explication : {{ $question->feedback }}</div>
+                    <div class="mt-2">
+                        <h3 class="mb-2">Voici la bonne réponse :</h3>
+                    @foreach($question->reponses as $reponse)
+                        @if($reponse->is_good == 1)
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-success">{{$reponse->name}} </li>
+                            </ul>
+                        @endif
+                    @endforeach
+                    </div>
+                </div>
 
-                    @endif
-                @endforeach
+
             @endif
         </div>
 
-        <div class="mt-2">
+        {{-- <div class="mt-2">
             Vous avez répondu {{$reponsesUser->count()}} fois à la question
             <br>
             Au seins des 4 dernieres réponses vous avez eu {{$reponsesUser->take(4)->where('is_good',"=",1)->count() }} réponse juste.
-        </div>
+        </div> --}}
 
         <div class="flex justify-content-center mt-2">
-            <a href="{{route('questionnaire')}}"><button class="btn btn-primary">Question suivante</button></a>
+            <a href="{{route('questionnaire')}}"><button class="btn btn-primary  text-white">Question suivante</button></a>
         </div>
 
     </div>

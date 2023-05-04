@@ -128,3 +128,6 @@ input {
 .full-height-screen{
     height: calc(100vh - 74px) !important;
 }
+.nav-tabs .nav-link,.nav-tabs .nav-link.disabled {
+    background-color: rgb(255 255 255 / 20%)!important;
+}

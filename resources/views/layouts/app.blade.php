@@ -25,12 +25,24 @@
             <!-- Page Heading -->
 
 
-            <div class="row justify-content-center p-1" role="group" aria-label="Basic example" style="max-width: 100vw; margin: auto">
+            {{-- <div class="row justify-content-center p-1" role="group" aria-label="Basic example" style="max-width: 100vw; margin: auto">
                 <a href="{{route('concept.index')}}" class="btn btn-outline-primary col-4 qs-little-m-1 {{ in_array(request()->route()->getName(),["concept.index","show.concept.questions"]) ? 'active' : '' }}">Concept</a>
                 <a href="{{route('dashboard')}}" class="btn btn-outline-primary col-3 qs-little-m-1 {{ request()->route()->getName()=="dashboard" ? 'active' : '' }}"><i
                         class="fa-solid fa-house text-light"></i></a>
                 <a href="{{route('cours.index')}}" type="button" class="btn btn-outline-info col-4 qs-little-m-1 {{ request()->route()->getName()=="cours.index" ? 'active' : '' }}">Cours</a>
-            </div>
+            </div> --}}
+            <ul class="nav nav-tabs d-flex justify-content-center p-1" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link {{ in_array(request()->route()->getName(),["concept.index","show.concept.questions"]) ? 'active' : '' }}" href="{{route('concept.index')}}">Concept</a>
+                </li>
+                <li class="nav-item" >
+                  <a class="nav-link {{ request()->route()->getName()=="dashboard" ? 'active' : '' }}" href="{{route('dashboard')}}" >Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->route()->getName()=="cours.index" ? 'active' : '' }}" href="{{route('cours.index')}}">Cours</a>
+                  </li>
+               
+              </ul>
             @if (isset($header))
 
 
