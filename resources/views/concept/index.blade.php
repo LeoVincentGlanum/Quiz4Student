@@ -113,8 +113,9 @@
 
         <div>
             <div class="d-flex justify-content-between ">
-                <button  type="button" class="btn btn-primary">Tout réviser</button>
-                <button type="input" class="btn btn-info">Réviser</button>
+
+                <button name="coucou" value="coucou" type="submit" class="btn btn-primary">Tout réviser</button>
+                <button type="submit" class="btn btn-info">Réviser</button>
             </div>
             {{--SCORE--}}
 

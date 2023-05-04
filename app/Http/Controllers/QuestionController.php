@@ -129,17 +129,19 @@ class QuestionController extends Controller
             $idConcept = (Arr::get($searchQuestionnaire->concepts_id,0));
         }
 
-        if ($idConcept !== null){
-            $searchQuestionnaire->questions_id = $arrayId;
-            $searchQuestionnaire->user_id = Auth::user()->id;
-            $searchQuestionnaire->save();
-        } else {
+
+           $searchQuestionnaire = Questionnaire::query()->where('user_id','=',Auth::id())->first();
+
+            if ($searchQuestionnaire !== null){
+                $searchQuestionnaire->delete();
+            }
+
             $newQuestionnaire = new Questionnaire();
             $newQuestionnaire->concepts_id = [ $concept->id ];
             $newQuestionnaire->questions_id = $arrayId;
             $newQuestionnaire->user_id = Auth::user()->id;
             $newQuestionnaire->save();
-        }
+
 
 
 
@@ -264,6 +266,22 @@ class QuestionController extends Controller
         $question = Question::find($idQuestion);
         $questions = Question::query()->where('id','=',$idQuestion)->get();
 
+        $concept = $questions->first();
+        if ($concept === null){
+            $concepts = Concept::query()->whereIn('id',$concept_ids)->get();
+            $str = "";
+            foreach ($concepts as $item){
+                $str .= $item->label." ";
+            }
+            $concept = new Concept();
+            $concept->label = $str;
+
+        } else {
+            $concept = (Concept::find($concept->concept_id));
+        }
+
+
+
 
 
         return view('questionnaire.show_questions')->with(['concept' => $concept, 'questions' => $questions]);
@@ -278,13 +296,24 @@ class QuestionController extends Controller
     public function multiConcept(Request $request){
 
 
-        $concepts_id  = $request->input('idConcepts');
-        if(!isset($concepts_id)){
-            $concept = Concept::all()->random();
-            $concepts_id=[$concept->id];
+        if ($request->input('coucou') !== null){
+            $concept = Concept::all();
+            $concepts_id = $concept->pluck('id')->toArray();
+
+        } else {
+            $concepts_id  = $request->input('idConcepts');
+            if(!isset($concepts_id)){
+                $concept = Concept::all()->random();
+                $concepts_id=[$concept->id];
+            } else {
+                $concept = Concept::query()->whereIn('id',$concepts_id)->get();
+            }
+
+            $concept = Concept::query()->whereIn('id',$concepts_id)->get();
+
         }
 
-        $concept = Concept::query()->whereIn('id',$concepts_id)->get();
+
 
 
 
@@ -295,6 +324,7 @@ class QuestionController extends Controller
 
 
         $questions = Question::query()->whereNotIn('id',$questionMaitrise)->whereIn('concept_id',$concepts_id)->get();
+
         $reponsesLast = collect();
         foreach ($questions as $question){
             $lastResponse = ReponseUser::query()
@@ -357,14 +387,15 @@ class QuestionController extends Controller
          * Maitrise 4 fois sur les 5
          */
 
-        $questionsBase = Question::query()->whereNotIn('id',$questions->pluck('id'))->where('concept_id',$concepts_id)->get();
+        $questionsBase = Question::query()->whereNotIn('id',$questions->pluck('id'))->whereIn('concept_id',$concepts_id)->get();
 
         $param = Parametre::query()->where('key','=','nbQuestions')->first();
         $param = intval($param->value);
 
         $arrayId = [];
-        if (count($questions) < $param){
+
             //dd($questionsBase);
+        $questions = $questions->take($param);
             $cpt = 0;
             foreach ($questions as $question){
                 $arrayId[] =  [
@@ -373,6 +404,7 @@ class QuestionController extends Controller
                 ];
                 $cpt++;
             }
+
             foreach ($questionsBase as $question){
                 if ($cpt === $param){
                     break;
@@ -383,8 +415,6 @@ class QuestionController extends Controller
                 ];
                 $cpt++;
             }
-
-        }
 
 
         $searchQuestionnaire = Questionnaire::query()
@@ -397,17 +427,17 @@ class QuestionController extends Controller
             $idConcept = (Arr::get($searchQuestionnaire->concepts_id,0));
         }
 
-        if ($idConcept !== null){
-            $searchQuestionnaire->questions_id = $arrayId;
-            $searchQuestionnaire->user_id = Auth::user()->id;
-            $searchQuestionnaire->save();
-        } else {
+
+         if ($searchQuestionnaire  !== null) {
+             $searchQuestionnaire->delete();
+         }
+
             $newQuestionnaire = new Questionnaire();
-            $newQuestionnaire->concepts_id = [ $concept->id ];
+            $newQuestionnaire->concepts_id = $concepts_id;
             $newQuestionnaire->questions_id = $arrayId;
             $newQuestionnaire->user_id = Auth::user()->id;
             $newQuestionnaire->save();
-        }
+
 
 
 
