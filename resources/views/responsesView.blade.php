@@ -18,12 +18,12 @@
 
                         @php $array = Illuminate\Support\Arr::shuffle($question->reponses) @endphp
                         @php $is_win = 0; @endphp
- 
+
                         @foreach($array as $key => $reponse)
                             @if($reponseUser === $reponse->uuid)
                             <li    @if($reponse->is_good == 0) class="list-group-item active" @elseif($reponse->is_good == 1)  @php $is_win = 1;@endphp class="list-group-item bg-success" @endif >{{$reponse->name}}</li>
                             @endif
-            
+
                         @endforeach
                     </ul>
                 </div>
@@ -56,8 +56,8 @@
                     @endforeach
                     </div>
                 </div>
-               
-               
+
+
             @endif
         </div>
 
@@ -68,7 +68,7 @@
         </div> --}}
 
         <div class="flex justify-content-center mt-2">
-            <a href="{{route('show.concept.questions',['id' => $concept->id])}}"><button class="btn btn-primary text-white">Question suivante</button></a>
+            <a href="{{route('questionnaire')}}"><button class="btn btn-primary  text-white">Question suivante</button></a>
         </div>
 
     </div>
