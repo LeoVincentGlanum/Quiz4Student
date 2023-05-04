@@ -302,9 +302,17 @@ class QuestionController extends Controller
 
         } else {
             $concepts_id  = $request->input('idConcepts');
+            if(!isset($concepts_id)){
+                $concept = Concept::all()->random();
+                $concepts_id=[$concept->id];
+            } else {
+                $concept = Concept::query()->whereIn('id',$concepts_id)->get();
+            }
+
             $concept = Concept::query()->whereIn('id',$concepts_id)->get();
 
         }
+
 
 
 
