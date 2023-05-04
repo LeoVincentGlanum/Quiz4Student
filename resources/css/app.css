@@ -124,3 +124,7 @@ label {
 input {
     background-color: transparent!important;
 }
+
+.full-height-screen{
+    height: calc(100vh - 74px) !important;
+}

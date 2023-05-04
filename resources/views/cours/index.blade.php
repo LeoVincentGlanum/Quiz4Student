@@ -5,36 +5,40 @@
         </h2>
     </x-slot>
 
-    <div class="container">
+    <div class="container container d-flex flex-column justify-content-between full-height-screen">
 
+        <div>
 
-        {{--cours--}}
+            {{--cours--}}
 
-        <h1 class="display-6 mt-1">Les cours</h1>
-        <ol class="list-group  mt-1 mb-3">
-            @php
-                $courses = \App\Models\Cours::all()->take(7);
-            @endphp
+            <h1 class="display-6 mt-1">Les cours</h1>
+            <ol class="list-group  mt-1 mb-3">
+                @php
+                    $courses = \App\Models\Cours::all()->take(7);
+                @endphp
 
-            @foreach($courses as $course)
-                <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">
-                            {{$course->label}}
+                @foreach($courses as $course)
+                    <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                {{$course->label}}
+                            </div>
                         </div>
-                    </div>
-                    <span class="badge bg-primary">Comp</span>
-                </li>
-            @endforeach
-        </ol>
+                        <span class="badge bg-primary">Comp</span>
+                    </li>
+                @endforeach
+            </ol>
 
-
-        <div class="d-flex justify-content-between mt-3">
-            <div></div>
-            <button type="button" class="btn btn-info">Réviser</button>
         </div>
 
-        {{--SCORE--}}
+
+        <div>
+            <div class="d-flex justify-content-between mt-3">
+                <div></div>
+                <button type="button" class="btn btn-info">Réviser</button>
+            </div>
+
+            {{--SCORE--}}
             <div class="row justify-content-center p-1" role="group" aria-label="Basic example">
                 <span class="badge bg-danger col-4 qs-no-width ">Initiation <span
                         class="badge qs-bg-grey ">4</span></span>
@@ -46,6 +50,8 @@
                 <span class="badge bg-info col-12 w-100 ">Oubli <span class="badge qs-bg-grey ">4</span></span>
 
             </div>
+        </div>
+
     </div>
 
 
