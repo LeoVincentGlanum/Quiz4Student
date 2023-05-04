@@ -165,6 +165,8 @@
                         $nbMaitriseCours=0;
                         $nbCompCours=0;
                         $nbConcept=0;
+                        $nbOublie=0;
+                        $nbAllQuestion=0;
                     @endphp
 
                     @foreach($concepts as $concept)
@@ -179,13 +181,18 @@
                         @endphp
 
                         @foreach($questions as $question)
+                            @foreach(\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->get() as $rep)
+                                @if((\Carbon\Carbon::createFromDate($rep->date_repondu)->addDays(30) > \Carbon\Carbon::now())==false)
+                                    @php $nbOublie++; @endphp
+                                @endif
+                            @endforeach
                             @php
                                 $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
                                 if($nbCount==0){
                                     $isgoodForAll =false;
                                     $isOneFalse=true;
                                 }
-
+                                $nbAllQuestion++;
                             @endphp
                         @endforeach
                         @php
@@ -208,19 +215,20 @@
                         $isMaitrise = ($nbMaitriseQuest*100)/$nbConcept;
                         $isInit = ($nbInitCours*100)/$nbConcept;
                         $isComp = ($nbCompCours*100)/$nbConcept;
+                        $isOublie = ($nbOublie*100)/$nbAllQuestion;
                         $state="";
 
                         if($isMaitrise>=70){
                             $state="Maitrise";
-                            $nbMaitre++;
                         }
                         if($isComp>=50){
                             $state="Compréhension";
-                            $nbComp++;
+                        }
+                        if($isOublie>=50){
+                            $state="Oublie";
                         }
                         if($state==""){
                             $state="Initiation";
-                            $nbInit++;
                         }
                     @endphp
 
@@ -232,16 +240,25 @@
                         </div>
                         @php
                             if($state=="Initiation"){
+                                $nbInit++;
                         @endphp
                         <span class="badge bg-danger">Init</span>
                         @php
                             }
                             elseif ($state=="Compréhension"){
+                                $nbComp++;
                         @endphp
                         <span class="badge bg-primary">Comp</span>
                         @php
                             }
+                            elseif ($state=="Oublie"){
+                                $nbOubli++;
+                        @endphp
+                        <span class="badge bg-info">Oubl</span>
+                        @php
+                            }
                             else{
+                                $nbMaitre++;
                         @endphp
                         <span class="badge bg-success">Mtrs</span>
                         @php
