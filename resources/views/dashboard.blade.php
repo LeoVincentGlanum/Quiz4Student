@@ -321,7 +321,7 @@
                 {{--            <button type="button" class="btn qs-btn-reviser">Tout réviser</button>--}}
                 <form method="post" action="{{route("multiConcept")}}">
                     @csrf
-                    <button type="input" class="btn btn-info">Réviser</button>
+                    <button type="input" class="btn btn-info" style="border-radius: 10px;color: white;">Réviser</button>
                 </form>
             </div>
 

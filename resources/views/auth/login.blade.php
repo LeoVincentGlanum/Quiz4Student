@@ -1,5 +1,9 @@
+
+
 <x-guest-layout>
     <!-- Session Status -->
+
+
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}" class="m-1">
@@ -9,7 +13,13 @@
         <div>
             <x-input-label for="email" :value="__('Email')" className="form-control"/>
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            @if(!empty($errors->get('email')))
+            <div class="alert alert-dismissible alert-primary mt-2">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Oh non !</strong> {{Arr::get($errors->get('email'),0) }}
+            </div>
+            @endif
+
         </div>
 
         <!-- Password -->
