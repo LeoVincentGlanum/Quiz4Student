@@ -42,7 +42,7 @@
                 Pas de compte ?
             </a>
             <x-primary-button class="ml-3 btn btn-primary qs-color-btn">
-                {{ __('Log in') }}
+                Connexion
             </x-primary-button>
         </div>
     </form>
