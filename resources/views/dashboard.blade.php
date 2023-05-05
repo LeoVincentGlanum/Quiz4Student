@@ -63,7 +63,7 @@
                         if($nbMaitriseQuest >= $nbQuestion){
                             $state="Maitrise";
                         }
-                        if(($nbOublie*100)/$nbQuestion){
+                        if(($nbOublie*100)/$nbQuestion > 50){
                             $state="Oublie";
                         }
                         if($state==""){
