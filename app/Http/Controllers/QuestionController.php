@@ -95,7 +95,12 @@ class QuestionController extends Controller
         $questionsBase = Question::query()->whereNotIn('id',$questions->pluck('id'))->where('concept_id','=',$concept->id)->get();
 
         $param = Parametre::query()->where('key','=','nbQuestions')->first();
-        $param = intval($param->value);
+        if ($param !== null){
+            $param = intval($param->value);
+        } else {
+            $param = 10;
+        }
+
 
         $arrayId = [];
         if (count($questions) < $param){
@@ -393,7 +398,11 @@ class QuestionController extends Controller
         $questionsBase = Question::query()->whereNotIn('id',$questions->pluck('id'))->whereIn('concept_id',$concepts_id)->get();
 
         $param = Parametre::query()->where('key','=','nbQuestions')->first();
-        $param = intval($param->value);
+        if ($param !== null){
+            $param = intval($param->value);
+        } else {
+            $param = 10;
+        }
 
         $arrayId = [];
 
@@ -536,7 +545,13 @@ class QuestionController extends Controller
         $questionsBase = Question::query()->whereNotIn('id',$questions->pluck('id'))->whereIn('concept_id',$concepts_id)->get();
 
         $param = Parametre::query()->where('key','=','nbQuestions')->first();
-        $param = intval($param->value);
+        if ($param !== null){
+            $param = intval($param->value);
+        } else {
+            $param = 10;
+        }
+
+
 
         $arrayId = [];
 
