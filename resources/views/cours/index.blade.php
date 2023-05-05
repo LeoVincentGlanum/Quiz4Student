@@ -73,7 +73,7 @@
                             @else
                                 @php $isOneFalse=true; @endphp
                             @endif
-
+                            @php $nbAllQuestion++; @endphp
 
                         @endforeach
                         @php

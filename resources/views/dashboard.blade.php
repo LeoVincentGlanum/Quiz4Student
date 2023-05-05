@@ -53,7 +53,6 @@
                             @php $isOneFalse=true; @endphp
                         @endif
 
-
                     @endforeach
                     @php
                         $state="";
@@ -209,6 +208,7 @@
                                 @php $isOneFalse=true; @endphp
                             @endif
 
+                            @php $nbAllQuestion++; @endphp
 
                         @endforeach
                         @php
@@ -250,37 +250,37 @@
 
 
                     <a href="{{route('coursReponse',['cours' => $item->id])}}">
-                    <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">{{$item->label}}</div>
-                        </div>
-                        @php
-                            if($state=="Initiation"){
-                                $nbInit++;
-                        @endphp
-                        <span class="badge bg-danger">Init</span>
-                        @php
-                            }
-                            elseif ($state=="Compréhension"){
-                                $nbComp++;
-                        @endphp
-                        <span class="badge bg-primary">Comp</span>
-                        @php
-                            }
-                            elseif ($state=="Oublie"){
-                                $nbOubli++;
-                        @endphp
-                        <span class="badge bg-info">Oubl</span>
-                        @php
-                            }
-                            else{
-                                $nbMaitre++;
-                        @endphp
-                        <span class="badge bg-success">Mtrs</span>
-                        @php
-                            }
-                        @endphp
-                    </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">{{$item->label}}</div>
+                            </div>
+                            @php
+                                if($state=="Initiation"){
+                                    $nbInit++;
+                            @endphp
+                            <span class="badge bg-danger">Init</span>
+                            @php
+                                }
+                                elseif ($state=="Compréhension"){
+                                    $nbComp++;
+                            @endphp
+                            <span class="badge bg-primary">Comp</span>
+                            @php
+                                }
+                                elseif ($state=="Oublie"){
+                                    $nbOubli++;
+                            @endphp
+                            <span class="badge bg-info">Oubl</span>
+                            @php
+                                }
+                                else{
+                                    $nbMaitre++;
+                            @endphp
+                            <span class="badge bg-success">Mtrs</span>
+                            @php
+                                }
+                            @endphp
+                        </li>
                     </a>
                 @endforeach
                 {{--              <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
