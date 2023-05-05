@@ -6,10 +6,9 @@
     </x-slot>
 
     <div class="container ">
-        <form method="post" action="{{route("multiConcept")}}"
-              class="d-flex flex-column justify-content-between full-height-screen">
+        <form method="post" action="{{route("multiConcept")}}" class="d-flex flex-column justify-content-between full-height-screen">
             @csrf
-            <div>
+        <div>
 
                 {{--Concept--}}
                 <div class="form-group">
@@ -28,37 +27,37 @@
                         $nbOubli =0;
                     @endphp
 
-                    @foreach($concepts as $concept)
-                        @php
-                            $questions = \App\Models\Question::where('concept_id', $concept->id)->get();
-                            $nbQuestion = \App\Models\Question::where('concept_id', $concept->id)->count();
-                            $nbMaitriseQuest = \App\Models\QuestionMaitriseUser::whereIn('question_id', $questions->pluck('id'))->where('user_id',Auth::user()->id)->count();
-                            $isgoodForAll=true;
-                            $isOneFalse=false;
-                            $nbOublie=0;
-                        @endphp
+                @foreach($concepts as $concept)
+                    @php
+                        $questions = \App\Models\Question::where('concept_id', $concept->id)->get();
+                        $nbQuestion = \App\Models\Question::where('concept_id', $concept->id)->count();
+                        $nbMaitriseQuest = \App\Models\QuestionMaitriseUser::whereIn('question_id', $questions->pluck('id'))->where('user_id',Auth::user()->id)->count();
+                        $isgoodForAll=true;
+                        $isOneFalse=false;
+                        $nbOublie=0;
+                    @endphp
 
 
 
-                        @foreach($questions as $question)
-                            @foreach(\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->get() as $rep)
-                                @if((\Carbon\Carbon::createFromDate($rep->date_repondu)->addDays(30) > \Carbon\Carbon::now())==false)
-                                    @php $nbOublie++; @endphp
-                                @endif
-                            @endforeach
-                            @php
-
-
-                                $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
-                                if($nbCount==0){
-                                    $isgoodForAll =false;
-                                    $isOneFalse=true;
-                                }
-
-                            @endphp
+                    @foreach($questions as $question)
+                        @foreach(\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->get() as $rep)
+                            @if((\Carbon\Carbon::createFromDate($rep->date_repondu)->addDays(30) > \Carbon\Carbon::now())==false)
+                                @php $nbOublie++; @endphp
+                            @endif
                         @endforeach
                         @php
-                            $state="";
+
+
+                            $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
+                            if($nbCount==0){
+                                $isgoodForAll =false;
+                                $isOneFalse=true;
+                            }
+
+                        @endphp
+                    @endforeach
+                    @php
+                        $state="";
 
                             if(!$isOneFalse && $isgoodForAll){
                                 $state="Compréhension";
@@ -120,8 +119,8 @@
             <div>
                 <div class="d-flex justify-content-between ">
 
-                    <button name="coucou" value="coucou" type="submit" class="btn btn-primary">Tout réviser</button>
-                    <button type="submit" class="btn btn-info">Réviser</button>
+                    <button name="coucou" value="coucou" type="submit" class="btn btn-primary" style="border-radius: 10px; color: white;">Tout réviser</button>
+                    <button type="submit" class="btn btn-info" style="border-radius: 10px;color: white;" >Réviser</button>
                 </div>
                 {{--SCORE--}}
 

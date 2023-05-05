@@ -147,7 +147,9 @@
         <div>
             <div class="d-flex justify-content-between mt-3">
                 <div></div>
-                <button type="button" class="btn btn-info">Réviser</button>
+                <a href="{{route('coursReponse',['cours' => \App\Models\Cours::all()->random()->id])}}">
+                <button type="button" class="btn btn-info" style="border-radius: 10px;color: white;">Réviser</button>
+                </a>
             </div>
 
             {{--SCORE--}}

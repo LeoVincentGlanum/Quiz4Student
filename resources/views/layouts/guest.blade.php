@@ -27,7 +27,10 @@
         <div class="row justify-content-center pt-1" role="group" aria-label="Basic example">
             <div class="col-11 m-1 qs-header-banner">Quiz4Students</div>
         </div>
-        <div class="w-100">
+        <div class="mx-auto" style="margin-top: -100px;">
+            <img src="img/licorne.png" alt="licorne" style="width: 200px;">
+        </div>
+        <div class="w-100"  style="margin-top: -100px;">
             <div
                 class="qs-bck-ground-modal ">
                 {{ $slot }}
