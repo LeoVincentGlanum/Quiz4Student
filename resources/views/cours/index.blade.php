@@ -10,9 +10,13 @@
         <div>
 
             {{--cours--}}
-
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Recherche 🔍" onkeyup="search(this)"
+                       id="inputDefault"
+                       style="border-color: #f2f4f9;border-width: 1px;background-color: #fff3!important;border-radius: 10px;color: white;font-size: 18px;">
+            </div>
             <h1 class="display-6 mt-1">Les cours</h1>
-            <ol class="list-group  mt-1 mb-3" style="max-height: 560px;overflow: auto;">
+            <ol class="list-group  mt-1 mb-3 listOfData" style="max-height: 504px;overflow: auto;">
                 @php
                     $courses = \App\Models\Cours::all()->take(7);
                      $nbInit =0;
@@ -102,7 +106,7 @@
 
 
                     <a href="{{route('coursReponse',['cours' => $item->id])}}">
-                    <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                    <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground w-100">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">{{$item->label}}</div>
                         </div>
@@ -168,3 +172,23 @@
 
 
 </x-app-layout>
+
+<script>
+
+    function search(e) {
+        console.log(e)
+        console.log(e.value)
+        let allChild = document.querySelectorAll('.listOfData > *')
+
+        allChild.forEach(elem=>{
+            if(!elem.querySelector('div div').innerText.toLowerCase().includes(e.value.toLowerCase())){
+                elem.classList.add('d-none')
+                elem.classList.remove('d-flex')
+            }
+            else{
+                elem.classList.remove('d-none')
+                elem.classList.add('d-flex')
+            }
+        })
+    }
+</script>
