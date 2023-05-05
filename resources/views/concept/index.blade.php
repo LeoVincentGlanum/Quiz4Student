@@ -40,10 +40,10 @@
                         @endphp
 
 
-
                         @foreach($questions as $question)
                             @php
                                 $rep=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->orderBy('created_at','desc')->first() @endphp
+
                             @if($rep)
                                 @if((\Carbon\Carbon::createFromDate($rep->date_repondu)->addDays(30) > \Carbon\Carbon::now())==false)
                                     @php $nbOublie++; @endphp
@@ -51,14 +51,17 @@
                                 @php
 
 
-                                    $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
-                                    if($nbCount==0){
-                                        $isgoodForAll =false;
-                                        $isOneFalse=true;
-                                    }
+                                $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
+                                if($nbCount==0){
+                                    $isgoodForAll =false;
+                                    $isOneFalse=true;
+                                }
 
                                 @endphp
+                            @else
+                                @php $isOneFalse=true; @endphp
                             @endif
+
 
                         @endforeach
                         @php
@@ -75,7 +78,6 @@
                                 }
                                 if($state==""){
                                     $state="Initiation";
-
                                 }
                         @endphp
                         <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
