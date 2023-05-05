@@ -103,6 +103,33 @@ class QuestionCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
+    public function update(\Illuminate\Http\Request $request)
+    {
+        $id = $request->input('id');
+        $concept_id = $request->input('concept_id');
+        $label = $request->input('label');
+        $feedback = $request->input('feedback');
+        $reponses = $request->input('reponses');
+
+        $newQuestion = Question::find($id);
+        $newQuestion->concept_id = $concept_id;
+        $newQuestion->label = $label;
+        $newQuestion->feedback = $feedback;
+        $arrayResponse = [];
+        foreach ($reponses as $reponse){
+            $arrayResponse[] =
+                [
+                    "name" => Arr::get($reponse,'name'),
+                    "is_good" => Arr::get($reponse,'is_good'),
+                    "uuid" => \Illuminate\Support\Str::uuid()
+                ];
+        }
+
+        $newQuestion->reponses = $arrayResponse;
+        $newQuestion->save();
+        return redirect()->to( backpack_url('question'));
+    }
+
     public function store(\Illuminate\Http\Request $request)
     {
         //dd($request);
