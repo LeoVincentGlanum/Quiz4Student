@@ -38,9 +38,11 @@
 {{--                    {{ __('Forgot your password?') }}--}}
 {{--                </a>--}}
 {{--            @endif--}}
-
+            <a class="underline text-sm hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('register') }}">
+                Pas de compte ?
+            </a>
             <x-primary-button class="ml-3 btn btn-primary qs-color-btn">
-                {{ __('Log in') }}
+                Connexion
             </x-primary-button>
         </div>
     </form>

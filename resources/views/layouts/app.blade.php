@@ -36,7 +36,7 @@
                   <a class="nav-link {{ in_array(request()->route()->getName(),["concept.index","show.concept.questions"]) ? 'active' : '' }}" href="{{route('concept.index')}}">Concept</a>
                 </li>
                 <li class="nav-item" >
-                  <a class="nav-link {{ request()->route()->getName()=="dashboard" ? 'active' : '' }}" href="{{route('dashboard')}}" >Home</a>
+                  <a class="nav-link {{ request()->route()->getName()=="dashboard" ? 'active' : '' }}" href="{{route('dashboard')}}" ><i class="fa-solid fa-house "></i></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->route()->getName()=="cours.index" ? 'active' : '' }}" href="{{route('cours.index')}}">Cours</a>

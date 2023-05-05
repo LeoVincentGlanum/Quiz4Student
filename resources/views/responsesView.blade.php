@@ -40,7 +40,14 @@
                 <div class="alert alert-success">
                     <strong>Bonne réponse !</strong>
                     <div class="mt-2">Explication : {{ $question->feedback }}</div>
+                    <div class="mt-2">
+                        Vous avez répondu {{$reponsesUser->count()}} fois à la question
+                        <br>
+                        <br>
+                        Au seins des 5 dernieres réponses vous avez eu {{$reponsesUser->take(4)->where('is_good',"=",1)->count() }} réponse juste.
+                    </div>
                 </div>
+              
             @else
                 <div class="alert alert-primary">
                     <strong>Perdu ! Mauvaise réponse</strong>
