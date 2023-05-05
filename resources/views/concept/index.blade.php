@@ -6,9 +6,10 @@
     </x-slot>
 
     <div class="container ">
-        <form method="post" action="{{route("multiConcept")}}" class="d-flex flex-column justify-content-between full-height-screen">
+        <form method="post" action="{{route("multiConcept")}}"
+              class="d-flex flex-column justify-content-between full-height-screen">
             @csrf
-        <div>
+            <div>
 
                 {{--Concept--}}
                 <div class="form-group">
@@ -25,53 +26,54 @@
                         $nbComp =0;
                         $nbMaitre =0;
                         $nbOubli =0;
+
                     @endphp
 
-                @foreach($concepts as $concept)
-                    @php
-                        $questions = \App\Models\Question::where('concept_id', $concept->id)->get();
-                        $nbQuestion = \App\Models\Question::where('concept_id', $concept->id)->count();
-                        $nbMaitriseQuest = \App\Models\QuestionMaitriseUser::whereIn('question_id', $questions->pluck('id'))->where('user_id',Auth::user()->id)->count();
-                        $isgoodForAll=true;
-                        $isOneFalse=false;
-                        $nbOublie=0;
-                    @endphp
+                    @foreach($concepts as $concept)
+                        @php
+                            $questions = \App\Models\Question::where('concept_id', $concept->id)->get();
+                            $nbQuestion = \App\Models\Question::where('concept_id', $concept->id)->count();
+                            $nbMaitriseQuest = \App\Models\QuestionMaitriseUser::whereIn('question_id', $questions->pluck('id'))->where('user_id',Auth::user()->id)->count();
+                            $isgoodForAll=true;
+                            $isOneFalse=false;
+                            $nbOublie=0;
+                        @endphp
 
 
 
-                    @foreach($questions as $question)
-                        @foreach(\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->get() as $rep)
+                        @foreach($questions as $question)
+                            @php
+                                $rep=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->orderBy('created_at','desc')->first() @endphp
                             @if((\Carbon\Carbon::createFromDate($rep->date_repondu)->addDays(30) > \Carbon\Carbon::now())==false)
                                 @php $nbOublie++; @endphp
                             @endif
+                            @php
+
+
+                                $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
+                                if($nbCount==0){
+                                    $isgoodForAll =false;
+                                    $isOneFalse=true;
+                                }
+
+                            @endphp
                         @endforeach
                         @php
+                            $state="";
 
+                                if(!$isOneFalse && $isgoodForAll){
+                                    $state="Compréhension";
+                                }
+                                if($nbMaitriseQuest >= $nbQuestion){
+                                    $state="Maitrise";
+                                }
+                                if(($nbOublie*100)/$nbQuestion){
+                                    $state="Oublie";
+                                }
+                                if($state==""){
+                                    $state="Initiation";
 
-                            $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
-                            if($nbCount==0){
-                                $isgoodForAll =false;
-                                $isOneFalse=true;
-                            }
-
-                        @endphp
-                    @endforeach
-                    @php
-                        $state="";
-
-                            if(!$isOneFalse && $isgoodForAll){
-                                $state="Compréhension";
-                            }
-                            if($nbMaitriseQuest >= $nbQuestion){
-                                $state="Maitrise";
-                            }
-                            if(($nbOublie*100)/$nbQuestion){
-                                $state="Oublie";
-                            }
-                            if($state==""){
-                                $state="Initiation";
-
-                            }
+                                }
                         @endphp
                         <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
                             <input class="form-check-input" name="idConcepts[]" type="checkbox" value="{{$concept->id}}"
@@ -119,8 +121,11 @@
             <div>
                 <div class="d-flex justify-content-between ">
 
-                    <button name="coucou" value="coucou" type="submit" class="btn btn-primary" style="border-radius: 10px; color: white;">Tout réviser</button>
-                    <button type="submit" class="btn btn-info" style="border-radius: 10px;color: white;" >Réviser</button>
+                    <button name="coucou" value="coucou" type="submit" class="btn btn-primary"
+                            style="border-radius: 10px; color: white;">Tout réviser
+                    </button>
+                    <button type="submit" class="btn btn-info" style="border-radius: 10px;color: white;">Réviser
+                    </button>
                 </div>
                 {{--SCORE--}}
 
@@ -153,12 +158,11 @@
         console.log(e.value)
         let allChild = document.querySelectorAll('.listOfData > *')
 
-        allChild.forEach(elem=>{
-            if(!elem.querySelector('label').innerText.toLowerCase().includes(e.value.toLowerCase())){
+        allChild.forEach(elem => {
+            if (!elem.querySelector('label').innerText.toLowerCase().includes(e.value.toLowerCase())) {
                 elem.classList.add('d-none')
                 elem.classList.remove('d-flex')
-            }
-            else{
+            } else {
                 elem.classList.remove('d-none')
                 elem.classList.add('d-flex')
             }
