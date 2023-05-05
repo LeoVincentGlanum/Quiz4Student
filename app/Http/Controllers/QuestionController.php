@@ -279,7 +279,7 @@ class QuestionController extends Controller
             $concepts = Concept::query()->whereIn('id',$concept_ids)->get();
             $str = "";
             foreach ($concepts as $item){
-                $str .= $item->label." ";
+                $str .= $item->label.",";
             }
             $concept = new Concept();
             $concept->label = $str;

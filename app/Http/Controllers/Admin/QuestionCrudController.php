@@ -8,6 +8,8 @@ use App\Models\Question;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Arr;
+use Psy\Util\Str;
 
 /**
  * Class QuestionCrudController
@@ -113,7 +115,17 @@ class QuestionCrudController extends CrudController
         $newQuestion->concept_id = $concept_id;
         $newQuestion->label = $label;
         $newQuestion->feedback = $feedback;
-        $newQuestion->reponses = $reponses;
+        $arrayResponse = [];
+        foreach ($reponses as $reponse){
+            $arrayResponse[] =
+                [
+                    "name" => Arr::get($reponse,'name'),
+                    "is_good" => Arr::get($reponse,'is_good'),
+                    "uuid" => \Illuminate\Support\Str::uuid()
+                ];
+        }
+
+        $newQuestion->reponses = $arrayResponse;
         $newQuestion->save();
 
         return redirect()->to( backpack_url('question'));

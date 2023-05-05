@@ -5,7 +5,10 @@
 
 
     <div class="container">
-        <h1>Concept : {{$concept->label}}</h1>
+        <h1>Concept :  @foreach(explode(',',$concept->label) as $item)
+                <span style="width: auto;" class="badge bg-secondary">{{$item}}</span>
+            @endforeach </h1>
+
 
         <div class="d-flex flex-wrap justify-content-sm-between">
 
@@ -47,7 +50,7 @@
                         Au seins des 5 dernieres réponses vous avez eu {{$reponsesUser->take(4)->where('is_good',"=",1)->count() }} réponse juste.
                     </div>
                 </div>
-              
+
             @else
                 <div class="alert alert-primary">
                     <strong>Perdu ! Mauvaise réponse</strong>
@@ -75,7 +78,7 @@
             @endif
         </div>
 
-     
+
 
         <div class="flex justify-content-center mt-2">
             <a href="{{route('questionnaire')}}"><button class="btn btn-primary  text-white">Question suivante</button></a>
