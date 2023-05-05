@@ -29,12 +29,12 @@
 
                             @foreach($array as $reponse)
                                 @if($loop->last)
-                                    <a href="{{route('new.response',['id' => $reponse->uuid, 'question' => $question->id])}}">
+                                    <a href="{{route('new.response',['id' => $reponse->uuid, 'question' => $question->id,'concept'=>request()->get('concept')])}}">
                                         <li class="list-group-item" >{{$reponse->name}}</li>
                                     </a>
 
                                 @else
-                                    <a href="{{route('new.response',['id' => $reponse->uuid, 'question' => $question->id])}}">
+                                    <a href="{{route('new.response',['id' => $reponse->uuid, 'question' => $question->id,'concept'=>request()->get('concept')])}}">
                                         <li class="list-group-item" style="border-bottom: 1px solid #8c8c8c6e;">{{$reponse->name}}</li>
                                     </a>
 

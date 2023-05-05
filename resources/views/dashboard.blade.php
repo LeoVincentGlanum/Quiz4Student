@@ -32,21 +32,27 @@
 
 
                     @foreach($questions as $question)
-                        @foreach(\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->get() as $rep)
+                        @php
+                            $rep=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->orderBy('created_at','desc')->first() @endphp
+
+                        @if($rep)
                             @if((\Carbon\Carbon::createFromDate($rep->date_repondu)->addDays(30) > \Carbon\Carbon::now())==false)
                                 @php $nbOublie++; @endphp
                             @endif
-                        @endforeach
-                        @php
+                            @php
 
 
-                            $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
-                            if($nbCount==0){
-                                $isgoodForAll =false;
-                                $isOneFalse=true;
-                            }
+                                $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
+                                if($nbCount==0){
+                                    $isgoodForAll =false;
+                                    $isOneFalse=true;
+                                }
 
-                        @endphp
+                            @endphp
+                        @else
+                            @php $isOneFalse=true; @endphp
+                        @endif
+
                     @endforeach
                     @php
                         $state="";
@@ -57,7 +63,7 @@
                         if($nbMaitriseQuest >= $nbQuestion){
                             $state="Maitrise";
                         }
-                        if(($nbOublie*100)/$nbQuestion){
+                        if(($nbOublie*100)/$nbQuestion > 50){
                             $state="Oublie";
                         }
                         if($state==""){
@@ -181,19 +187,29 @@
                         @endphp
 
                         @foreach($questions as $question)
-                            @foreach(\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->get() as $rep)
+                            @php
+                                $rep=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->orderBy('created_at','desc')->first() @endphp
+
+                            @if($rep)
                                 @if((\Carbon\Carbon::createFromDate($rep->date_repondu)->addDays(30) > \Carbon\Carbon::now())==false)
                                     @php $nbOublie++; @endphp
                                 @endif
-                            @endforeach
-                            @php
-                                $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
-                                if($nbCount==0){
-                                    $isgoodForAll =false;
-                                    $isOneFalse=true;
-                                }
-                                $nbAllQuestion++;
-                            @endphp
+                                @php
+
+
+                                    $nbCount=\App\Models\ReponseUser::where('question_id', $question->id)->where('user_id',Auth::user()->id)->where('is_good','1')->count();
+                                    if($nbCount==0){
+                                        $isgoodForAll =false;
+                                        $isOneFalse=true;
+                                    }
+
+                                @endphp
+                            @else
+                                @php $isOneFalse=true; @endphp
+                            @endif
+
+                            @php $nbAllQuestion++; @endphp
+
                         @endforeach
                         @php
                             if($nbMaitriseQuest >= $nbQuestion){
@@ -234,37 +250,37 @@
 
 
                     <a href="{{route('coursReponse',['cours' => $item->id])}}">
-                    <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">{{$item->label}}</div>
-                        </div>
-                        @php
-                            if($state=="Initiation"){
-                                $nbInit++;
-                        @endphp
-                        <span class="badge bg-danger">Init</span>
-                        @php
-                            }
-                            elseif ($state=="Compréhension"){
-                                $nbComp++;
-                        @endphp
-                        <span class="badge bg-primary">Comp</span>
-                        @php
-                            }
-                            elseif ($state=="Oublie"){
-                                $nbOubli++;
-                        @endphp
-                        <span class="badge bg-info">Oubl</span>
-                        @php
-                            }
-                            else{
-                                $nbMaitre++;
-                        @endphp
-                        <span class="badge bg-success">Mtrs</span>
-                        @php
-                            }
-                        @endphp
-                    </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">{{$item->label}}</div>
+                            </div>
+                            @php
+                                if($state=="Initiation"){
+                                    $nbInit++;
+                            @endphp
+                            <span class="badge bg-danger">Init</span>
+                            @php
+                                }
+                                elseif ($state=="Compréhension"){
+                                    $nbComp++;
+                            @endphp
+                            <span class="badge bg-primary">Comp</span>
+                            @php
+                                }
+                                elseif ($state=="Oublie"){
+                                    $nbOubli++;
+                            @endphp
+                            <span class="badge bg-info">Oubl</span>
+                            @php
+                                }
+                                else{
+                                    $nbMaitre++;
+                            @endphp
+                            <span class="badge bg-success">Mtrs</span>
+                            @php
+                                }
+                            @endphp
+                        </li>
                     </a>
                 @endforeach
                 {{--              <li class="list-group-item d-flex justify-content-between align-items-start qs-bck-ground">
