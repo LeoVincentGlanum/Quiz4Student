@@ -149,7 +149,7 @@ class QuestionController extends Controller
 
 
 
-      return redirect()->route('questionnaire');
+      return redirect()->route('questionnaire',['concept'=>true]);
 
 
 
@@ -445,7 +445,7 @@ class QuestionController extends Controller
 
 
 
-        return redirect()->route('questionnaire');
+        return redirect()->route('questionnaire',['concept'=>true]);
 
 
 
@@ -588,7 +588,7 @@ class QuestionController extends Controller
 
 
 
-        return redirect()->route('questionnaire');
+        return redirect()->route('questionnaire',['concept'=>false]);
 
 
     }

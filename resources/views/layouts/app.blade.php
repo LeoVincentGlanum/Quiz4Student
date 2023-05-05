@@ -31,17 +31,19 @@
                         class="fa-solid fa-house text-light"></i></a>
                 <a href="{{route('cours.index')}}" type="button" class="btn btn-outline-info col-4 qs-little-m-1 {{ request()->route()->getName()=="cours.index" ? 'active' : '' }}">Cours</a>
             </div> --}}
+
+
             <ul class="nav nav-tabs d-flex justify-content-center p-1" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link {{ in_array(request()->route()->getName(),["concept.index","show.concept.questions"]) ? 'active' : '' }}" href="{{route('concept.index')}}">Concept</a>
+                  <a class="nav-link {{ in_array(request()->route()->getName(),["concept.index","show.concept.questions"])|| strpos(url()->full(), '?concept=1') !== false ? 'active' : '' }}" href="{{route('concept.index')}}">Concept</a>
                 </li>
                 <li class="nav-item" >
                   <a class="nav-link {{ request()->route()->getName()=="dashboard" ? 'active' : '' }}" href="{{route('dashboard')}}" ><i class="fa-solid fa-house "></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->route()->getName()=="cours.index" ? 'active' : '' }}" href="{{route('cours.index')}}">Cours</a>
+                    <a class="nav-link {{ request()->route()->getName()=="cours.index" || strpos(url()->full(), '?concept=0') !== false ? 'active' : '' }}" href="{{route('cours.index')}}">Cours</a>
                   </li>
-               
+
               </ul>
             @if (isset($header))
 
